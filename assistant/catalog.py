@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import json
 import re
+import threading
+import time
 import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
@@ -294,7 +296,11 @@ def _strip_html(html: str) -> str:
 @dataclass
 class ShopifyConfig:
     domain: str              # your-store.myshopify.com
-    token: str               # Admin API access token of a custom app
+    # A Dev Dashboard app's credentials. The store exchanges them for an access token that lasts 24 hours.
+    client_id: str = ""
+    client_secret: str = ""
+    # Or the permanent token of an older admin-created custom app (shpat_...), made before 2026.
+    token: str = ""
     api_version: str = "2026-10"
     faq_path: str | None = None
 
@@ -305,8 +311,13 @@ class ShopifyStore:
     def __init__(self, config: ShopifyConfig, http: httpx.Client | None = None):
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]*\.myshopify\.com", config.domain):
             raise ValueError("SHOPIFY_STORE_DOMAIN must look like your-store.myshopify.com")
+        if not config.token and not (config.client_id and config.client_secret):
+            raise ValueError("Set SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET (or SHOPIFY_ADMIN_TOKEN)")
         self.config = config
         self.http = http or httpx.Client(timeout=10.0)
+        self._token = config.token
+        self._token_expires = float("inf") if config.token else 0.0
+        self._token_lock = threading.Lock()
         self.url = f"https://{config.domain}/admin/api/{config.api_version}/graphql.json"
         self.faq = load_faq(config.faq_path)
         shop = self._gql(POLICY_QUERY)["shop"]
@@ -314,23 +325,55 @@ class ShopifyStore:
         self.currency = shop["currencyCode"]
         self._policies = {p["type"]: p for p in shop["shopPolicies"]}
 
+    def _access_token(self, refresh: bool = False) -> str:
+        """The client credentials grant: a token for 24 hours, renewed 5 minutes before it expires."""
+        if self.config.token:
+            return self.config.token
+        with self._token_lock:
+            if refresh or time.monotonic() > self._token_expires - 300:
+                try:
+                    response = self.http.post(
+                        f"https://{self.config.domain}/admin/oauth/access_token",
+                        data={"grant_type": "client_credentials", "client_id": self.config.client_id,
+                              "client_secret": self.config.client_secret},
+                    )
+                except httpx.HTTPError as e:
+                    raise StoreError(f"Shopify is not reachable: {e}") from e
+                if response.status_code >= 400:
+                    detail = response.text[:200]
+                    if "shop_not_permitted" in detail:
+                        raise StoreError("The app is not in the same Shopify organization as this store.")
+                    raise StoreError(f"Shopify rejected the app credentials (HTTP {response.status_code}). "
+                                     "Check SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET, and that the app is "
+                                     "installed on the store.")
+                body = response.json()
+                self._token = body["access_token"]
+                self._token_expires = time.monotonic() + int(body.get("expires_in", 86399))
+            return self._token
+
     def _gql(self, query: str, variables: dict | None = None) -> dict:
-        try:
-            response = self.http.post(
-                self.url,
-                json={"query": query, "variables": variables or {}},
-                headers={"X-Shopify-Access-Token": self.config.token, "Content-Type": "application/json"},
-            )
-        except httpx.HTTPError as e:
-            raise StoreError(f"Shopify is not reachable: {e}") from e
+        response = self._post_gql(query, variables, self._access_token())
+        if response.status_code == 401 and not self.config.token:  # revoked or expired early: one retry
+            response = self._post_gql(query, variables, self._access_token(refresh=True))
         if response.status_code == 401:
-            raise StoreError("Shopify rejected the access token (401). Check SHOPIFY_ADMIN_TOKEN.")
+            raise StoreError("Shopify rejected the access token (401). Check the app's credentials and that "
+                             "it is still installed.")
         if response.status_code >= 400:
             raise StoreError(f"Shopify returned HTTP {response.status_code}")
         body = response.json()
         if body.get("errors"):
             raise StoreError("Shopify GraphQL error: " + "; ".join(e.get("message", "?") for e in body["errors"]))
         return body["data"]
+
+    def _post_gql(self, query: str, variables: dict | None, token: str) -> httpx.Response:
+        try:
+            return self.http.post(
+                self.url,
+                json={"query": query, "variables": variables or {}},
+                headers={"X-Shopify-Access-Token": token, "Content-Type": "application/json"},
+            )
+        except httpx.HTTPError as e:
+            raise StoreError(f"Shopify is not reachable: {e}") from e
 
     def categories(self) -> list[str]:
         return []

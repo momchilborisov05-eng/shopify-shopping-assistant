@@ -307,3 +307,40 @@ def test_conversation_language_is_the_first_real_message():
     assert detect_language("Търся яке") == "bg"
     assert detect_language("1001, maria@example.com") is None
     assert detect_language("waterproof jacket") == "en"
+
+
+def test_shopify_client_credentials():
+    calls = {"exchanges": 0, "tokens": []}
+
+    def respond(request):
+        if request.url.path == "/admin/oauth/access_token":
+            calls["exchanges"] += 1
+            form = dict(httpx.QueryParams(request.content.decode()))
+            assert form == {"grant_type": "client_credentials", "client_id": "cid", "client_secret": "csecret"}
+            return httpx.Response(200, json={"access_token": f"tok{calls['exchanges']}", "scope": "read_products",
+                                             "expires_in": 86399})
+        token = request.headers["X-Shopify-Access-Token"]
+        calls["tokens"].append(token)
+        if token == "tok1" and len(calls["tokens"]) == 3:  # Shopify revokes the first token
+            return httpx.Response(401, json={})
+        return httpx.Response(200, json={"data": SHOP})
+
+    config = ShopifyConfig(domain="real-shop.myshopify.com", client_id="cid", client_secret="csecret")
+    shop = ShopifyStore(config, http=httpx.Client(transport=httpx.MockTransport(respond)))
+    shop._gql("query { shop { name } }")
+    assert calls["exchanges"] == 1 and calls["tokens"] == ["tok1", "tok1"]  # the token is reused
+    shop._gql("query { shop { name } }")  # 401, then one new token and a retry
+    assert calls["exchanges"] == 2 and calls["tokens"][-1] == "tok2"
+
+
+def test_shopify_client_credentials_errors():
+    def wrong_org(request):
+        return httpx.Response(400, json={"error": "shop_not_permitted"})
+
+    config = ShopifyConfig(domain="real-shop.myshopify.com", client_id="cid", client_secret="bad")
+    with pytest.raises(StoreError, match="same Shopify organization"):
+        ShopifyStore(config, http=httpx.Client(transport=httpx.MockTransport(wrong_org)))
+    with pytest.raises(StoreError, match="SHOPIFY_CLIENT_ID"):
+        ShopifyStore(config, http=httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(401))))
+    with pytest.raises(ValueError, match="SHOPIFY_CLIENT_ID"):
+        ShopifyStore(ShopifyConfig(domain="real-shop.myshopify.com"))

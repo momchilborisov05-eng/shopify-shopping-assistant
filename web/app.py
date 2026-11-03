@@ -21,6 +21,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import anthropic
+from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, StreamingResponse
@@ -49,6 +50,8 @@ class Settings:
     db_path: str = str(ROOT / "data" / "assistant.db")
     shopify_domain: str = ""
     shopify_token: str = ""
+    shopify_client_id: str = ""
+    shopify_client_secret: str = ""
     shopify_api_version: str = "2026-10"
     faq_path: str = str(ROOT / "config" / "faq.md")
     store_about: str = ""
@@ -61,6 +64,7 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> Settings:
+        load_dotenv(ROOT / ".env")
         demo = os.environ.get("DEMO_MODE") == "1" or not os.environ.get("ANTHROPIC_API_KEY")
         return cls(
             demo=demo,
@@ -69,6 +73,8 @@ class Settings:
             db_path=os.environ.get("ASSISTANT_DB", str(ROOT / "data" / "assistant.db")),
             shopify_domain=os.environ.get("SHOPIFY_STORE_DOMAIN", ""),
             shopify_token=os.environ.get("SHOPIFY_ADMIN_TOKEN", ""),
+            shopify_client_id=os.environ.get("SHOPIFY_CLIENT_ID", ""),
+            shopify_client_secret=os.environ.get("SHOPIFY_CLIENT_SECRET", ""),
             shopify_api_version=os.environ.get("SHOPIFY_API_VERSION", "2026-10"),
             faq_path=os.environ.get("FAQ_PATH", str(ROOT / "config" / "faq.md")),
             store_about=os.environ.get("STORE_ABOUT", ""),
@@ -114,9 +120,11 @@ def _sse(event: dict) -> str:
 
 
 def build_store(settings: Settings) -> Store:
-    if settings.shopify_domain and settings.shopify_token:
-        return ShopifyStore(ShopifyConfig(domain=settings.shopify_domain, token=settings.shopify_token,
-                                          api_version=settings.shopify_api_version, faq_path=settings.faq_path))
+    if settings.shopify_domain:
+        return ShopifyStore(ShopifyConfig(
+            domain=settings.shopify_domain, client_id=settings.shopify_client_id,
+            client_secret=settings.shopify_client_secret, token=settings.shopify_token,
+            api_version=settings.shopify_api_version, faq_path=settings.faq_path))
     return DemoStore()
 
 

@@ -28,7 +28,7 @@ It replies in the shopper's language (tested in English and Bulgarian), even tho
 
 - **Grounded answers.** The system prompt forbids stating any price, stock level, delivery time or policy detail that a tool didn't return in this conversation. Product cards are built from the tool results, not from the model's text, so a card can never show a made-up price.
 - **Order privacy.** An order is shown only when the number *and* the email match, and "wrong email" looks exactly like "no such order", so order numbers can't be probed. Lookups are capped at 5 per conversation. Emails are masked in the analytics table.
-- **Read-only.** The Shopify token needs only read scopes. The assistant can't change orders, refund or create discounts; anything like that becomes a ticket for a person.
+- **Read-only.** The Shopify app needs only read scopes, and its access token is renewed every 24 hours. The assistant can't change orders, refund or create discounts; anything like that becomes a ticket for a person.
 - **Prompt injection.** Shopper messages and tool results are treated as data. The model is told to ignore requests to change its rules or reveal them, and to stay on the store's topics.
 - **Validated tool calls.** Every tool input is checked before it runs (types, allowed values, email format); a bad call returns an error the model can recover from. A tool call cut off by the token limit is never executed.
 - **Cost and abuse limits.** A daily budget for the whole store, a budget and a turn limit per conversation, a per-IP rate limit and a 1,000-character message limit. The system prompt and tools are prompt-cached, so repeat requests cost less.
@@ -85,8 +85,10 @@ With Docker: `docker build -t shop-assistant . && docker run -p 8000:8000 --env-
 
 ## Connect a real Shopify store
 
-1. In Shopify admin, go to **Settings → Apps and sales channels → Develop apps**, create an app and give it the Admin API scopes `read_products`, `read_inventory`, `read_orders` and `read_legal_policies`. Install it and copy the Admin API access token. (Reading orders' customer emails needs Shopify's protected customer data access, which you request in the app's settings.)
-2. Set `SHOPIFY_STORE_DOMAIN=your-store.myshopify.com`, `SHOPIFY_ADMIN_TOKEN`, `ANTHROPIC_API_KEY`, `ALLOWED_ORIGINS=https://your-store.com` and `ADMIN_TOKEN` in `.env`, and deploy the app (any container host: Azure Container Apps, Fly.io, Render...).
+1. In the [Shopify Dev Dashboard](https://dev.shopify.com/dashboard/), create an app (**Apps → Create app**). Leave it not embedded, give it the scopes `read_products`, `read_inventory`, `read_orders` and `read_legal_policies`, **release** the version and **install** it on the store (the store must be in the same Shopify organization). Copy the **Client ID** and **Client secret** from the app's Settings.
+2. Set `SHOPIFY_STORE_DOMAIN=your-store.myshopify.com`, `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET`, `ANTHROPIC_API_KEY`, `ALLOWED_ORIGINS=https://your-store.com` and `ADMIN_TOKEN` in `.env`. The app exchanges the client ID and secret for an Admin API token (Shopify's client credentials grant), keeps it for its 24 hours and renews it on its own. Check the connection with `python -m assistant.check_shopify`, which prints the shop, its policies and a few products without using Claude. Then deploy the app (any container host: Azure Container Apps, Fly.io, Render...).
+
+   An older admin-created custom app (made before 2026) still works: set `SHOPIFY_ADMIN_TOKEN` to its `shpat_` token instead.
 3. Put answers that have no Shopify policy page (warranty, size guide, discounts) in [`config/faq.md`](config/faq.md).
 4. Add the widget to the theme: **Online Store → Themes → Edit code → `theme.liquid`**, just before `</body>`:
 
@@ -104,7 +106,9 @@ On a Shopify storefront the widget's **Add to cart** button uses Shopify's own `
 | `ANTHROPIC_API_KEY` | – | Without it, demo mode |
 | `CLAUDE_MODEL` | `claude-opus-5-5` | `claude-sonnet-5-5` costs half |
 | `CLAUDE_EFFORT` | `low` | Chat answers don't need deep thinking; raise it if answers feel shallow |
-| `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_ADMIN_TOKEN` | – | Empty: the demo store |
+| `SHOPIFY_STORE_DOMAIN` | – | Empty: the demo store |
+| `SHOPIFY_CLIENT_ID`, `SHOPIFY_CLIENT_SECRET` | – | The Dev Dashboard app's credentials |
+| `SHOPIFY_ADMIN_TOKEN` | – | Instead of the two above, for a pre-2026 custom app |
 | `SHOPIFY_API_VERSION` | `2026-10` | |
 | `FAQ_PATH` | `config/faq.md` | Extra knowledge in Markdown, one `##` section per topic |
 | `STORE_ABOUT` | – | One line about the store for the assistant |
@@ -120,7 +124,7 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
-26 offline tests: catalog search (including Bulgarian words), stock labels and order privacy; tool input validation, the order-lookup cap and one ticket per conversation; the tool loop with a scripted Claude (streaming events, product cards, the thinking block and tool result sent back unchanged, append-only history, prompt caching and fallbacks in the request, refusals and cut-off tool calls); the Shopify client against a fake Admin API (search, variants, policies with FAQ fallback, orders, 401 and GraphQL errors); and the web API (SSE chat, product-page context, rate limit, budgets, the dashboard, the admin token, CSP and CORS). CI runs them on Python 3.11–3.13 and smoke-tests the Docker image.
+28 offline tests: catalog search (including Bulgarian words), stock labels and order privacy; tool input validation, the order-lookup cap and one ticket per conversation; the tool loop with a scripted Claude (streaming events, product cards, the thinking block and tool result sent back unchanged, append-only history, prompt caching and fallbacks in the request, refusals and cut-off tool calls); the Shopify client against a fake Admin API (the client credentials token exchange, reuse and renewal, search, variants, policies with FAQ fallback, orders, 401 and GraphQL errors); and the web API (SSE chat, product-page context, rate limit, budgets, the dashboard, the admin token, CSP and CORS). CI runs them on Python 3.11–3.13 and smoke-tests the Docker image.
 
 ## Project layout
 
