@@ -247,6 +247,9 @@ query Product($handle: String!) {
 
 POLICY_QUERY = "query { shop { name currencyCode shopPolicies { type title body } } }"
 
+# The product types of the catalog, so the assistant knows what the store sells.
+CATEGORY_QUERY = 'query Categories { products(first: 250, query: "status:active") { nodes { productType } } }'
+
 ORDER_QUERY = """
 query Order($query: String!) {
   orders(first: 1, query: $query) {
@@ -324,6 +327,8 @@ class ShopifyStore:
         self.name = shop["name"]
         self.currency = shop["currencyCode"]
         self._policies = {p["type"]: p for p in shop["shopPolicies"]}
+        nodes = (self._gql(CATEGORY_QUERY).get("products") or {}).get("nodes") or []
+        self._categories = sorted({n["productType"] for n in nodes if n.get("productType")})
 
     def _access_token(self, refresh: bool = False) -> str:
         """The client credentials grant: a token for 24 hours, renewed 5 minutes before it expires."""
@@ -376,7 +381,7 @@ class ShopifyStore:
             raise StoreError(f"Shopify is not reachable: {e}") from e
 
     def categories(self) -> list[str]:
-        return []
+        return self._categories
 
     def search_products(self, query, category=None, max_price=None, in_stock_only=False, limit=6):
         search = " ".join(_words(query)[:12])

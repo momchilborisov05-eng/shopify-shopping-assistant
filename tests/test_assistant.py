@@ -248,6 +248,9 @@ def test_shopify_store(tmp_path):
     def handler(query, variables):
         if "shopPolicies" in query:
             return httpx.Response(200, json={"data": SHOP})
+        if "query Categories" in query:
+            return httpx.Response(200, json={"data": {"products": {"nodes": [
+                {"productType": "Tents"}, {"productType": ""}, {"productType": "Stoves"}, {"productType": "Tents"}]}}})
         if "productByIdentifier" in query:
             return httpx.Response(200, json={"data": {"product": {**NODE, "descriptionHtml": "<p>A tent.</p>",
                 "options": [{"name": "Color"}], "variants": {"nodes": [
@@ -273,6 +276,7 @@ def test_shopify_store(tmp_path):
 
     shop = shopify(handler, faq=str(faq))
     assert shop.name == "Real Shop" and shop.currency == "EUR"
+    assert shop.categories() == ["Stoves", "Tents"]
     found = shop.search_products("tent for two", max_price=300)
     assert found[0]["handle"] == "tent-2p" and found[0]["default_variant_id"] == "77"
     assert found[0]["compare_at_price"] is None
@@ -327,7 +331,6 @@ def test_shopify_client_credentials():
 
     config = ShopifyConfig(domain="real-shop.myshopify.com", client_id="cid", client_secret="csecret")
     shop = ShopifyStore(config, http=httpx.Client(transport=httpx.MockTransport(respond)))
-    shop._gql("query { shop { name } }")
     assert calls["exchanges"] == 1 and calls["tokens"] == ["tok1", "tok1"]  # the token is reused
     shop._gql("query { shop { name } }")  # 401, then one new token and a retry
     assert calls["exchanges"] == 2 and calls["tokens"][-1] == "tok2"
