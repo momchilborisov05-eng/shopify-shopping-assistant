@@ -347,3 +347,20 @@ def test_shopify_client_credentials_errors():
         ShopifyStore(config, http=httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(401))))
     with pytest.raises(ValueError, match="SHOPIFY_CLIENT_ID"):
         ShopifyStore(ShopifyConfig(domain="real-shop.myshopify.com"))
+
+
+def test_shopify_policies_refresh(monkeypatch):
+    bodies = ["<p>Old returns.</p>"]
+
+    def handler(query, variables):
+        if "shopPolicies" in query:
+            shop = {**SHOP["shop"], "shopPolicies": [{"type": "REFUND_POLICY", "title": "Refunds", "body": bodies[-1]}]}
+            return httpx.Response(200, json={"data": {"shop": shop}})
+        return httpx.Response(200, json={"data": {"products": {"nodes": []}}})
+
+    shop = shopify(handler)
+    assert shop.get_policy("returns")["body"] == "Old returns."
+    bodies.append("<p>30 days, free returns.</p>")
+    assert shop.get_policy("returns")["body"] == "Old returns."  # cached
+    monkeypatch.setattr("assistant.catalog.SHOP_REFRESH_SECONDS", -1)
+    assert shop.get_policy("returns")["body"] == "30 days, free returns."

@@ -25,6 +25,7 @@ from typing import Protocol
 
 import httpx
 
+SHOP_REFRESH_SECONDS = 15 * 60
 POLICY_TOPICS = ("shipping", "returns", "payment", "warranty", "size_guide", "contact", "discounts")
 LOW_STOCK = 3
 
@@ -323,12 +324,25 @@ class ShopifyStore:
         self._token_lock = threading.Lock()
         self.url = f"https://{config.domain}/admin/api/{config.api_version}/graphql.json"
         self.faq = load_faq(config.faq_path)
+        self._load_shop()
+
+    def _load_shop(self):
+        """The shop's name, policies and product types. Re-read every 15 minutes, so edits in Shopify
+        reach the assistant without a restart."""
         shop = self._gql(POLICY_QUERY)["shop"]
         self.name = shop["name"]
         self.currency = shop["currencyCode"]
         self._policies = {p["type"]: p for p in shop["shopPolicies"]}
         nodes = (self._gql(CATEGORY_QUERY).get("products") or {}).get("nodes") or []
         self._categories = sorted({n["productType"] for n in nodes if n.get("productType")})
+        self._loaded_at = time.monotonic()
+
+    def _refresh_shop(self):
+        if time.monotonic() - self._loaded_at > SHOP_REFRESH_SECONDS:
+            try:
+                self._load_shop()
+            except StoreError:
+                self._loaded_at = time.monotonic()  # keep what we have; try again later
 
     def _access_token(self, refresh: bool = False) -> str:
         """The client credentials grant: a token for 24 hours, renewed 5 minutes before it expires."""
@@ -427,6 +441,7 @@ class ShopifyStore:
         }
 
     def get_policy(self, topic):
+        self._refresh_shop()
         shopify_type = SHOPIFY_POLICY_TYPES.get(topic)
         policy = self._policies.get(shopify_type) if shopify_type else None
         if policy and policy.get("body"):
