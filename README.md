@@ -99,6 +99,22 @@ With Docker: `docker build -t shop-assistant . && docker run -p 8000:8000 --env-
 
 On a Shopify storefront the widget's **Add to cart** button uses Shopify's own `/cart/add.js`, so the item lands in the real cart.
 
+### Deploy to Azure
+
+[`infra/deploy.ps1`](infra/deploy.ps1) deploys everything with one command ([`infra/main.bicep`](infra/main.bicep)):
+
+- **Azure Container Apps** that scales to zero when nobody chats, with logs in Log Analytics (daily cap).
+- **No passwords in config.** A managed identity reads the Claude API key, the Shopify client secret and the dashboard's admin token from **Key Vault** (you add them; the script stops and tells you how), and signs in to **Azure SQL**, where [`infra/grant_sql_access.py`](infra/grant_sql_access.py) gives it its own schema `shopassist` for conversations, tickets and analytics. `/readyz` checks the database and the store.
+- **CI/CD:** every push to `main` runs the tests, smoke-tests the Docker image, pushes it to GitHub Container Registry and, once `AZURE_CONTAINER_APP` and the OIDC variables are set, rolls it out.
+
+```powershell
+./infra/deploy.ps1 -ResourceGroup rg-shopassist -SqlServer <server> -SqlDatabase <database> `
+    -ShopifyDomain your-store.myshopify.com -ShopifyClientId <client id> `
+    -Image ghcr.io/momchilborisov05-eng/shopify-shopping-assistant:latest
+```
+
+It prints the app's URL and the `<script>` line for the theme.
+
 ### Configuration
 
 | Variable | Default | |
@@ -114,6 +130,7 @@ On a Shopify storefront the widget's **Add to cart** button uses Shopify's own `
 | `STORE_ABOUT` | – | One line about the store for the assistant |
 | `ALLOWED_ORIGINS` | – | The store's domains (CORS for the widget) |
 | `ADMIN_TOKEN` | – | Protects `/admin` and its API |
+| `ASSISTANT_DB` | `data/assistant.db` | SQLite file, or `mssql://<server>.database.windows.net/<db>` for Azure SQL (Entra ID sign-in) |
 | `DAILY_BUDGET_USD` / `CONVERSATION_BUDGET_USD` | `5` / `0.50` | Spending limits |
 | `MAX_TURNS` / `RATE_LIMIT_PER_MINUTE` | `40` / `12` | Abuse limits |
 
@@ -133,11 +150,13 @@ assistant/
   agent.py     the Claude tool loop, system prompt, cost
   tools.py     tool definitions, input validation, execution
   catalog.py   DemoStore and ShopifyStore (Admin GraphQL)
-  storage.py   conversations, tickets, analytics (SQLite)
+  storage.py   conversations, tickets, analytics (SQLite or Azure SQL)
+  check_shopify.py  checks the connection to a real store
   demo.py      demo mode: keyword rules in place of Claude
 web/
   app.py       FastAPI: chat (SSE), dashboard API, demo storefront
   static/      widget.js/.css, the demo store, the dashboard
 data/          the demo store's data and its image generator
 config/faq.md  extra knowledge for a real store
+infra/         Bicep, the deploy script and the database grants for Azure
 ```

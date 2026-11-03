@@ -164,7 +164,7 @@ def create_app(settings: Settings | None = None, client=None, store: Store | Non
             response.headers["Content-Security-Policy"] = (
                 "default-src 'self'; img-src 'self' data: https://cdn.shopify.com; style-src 'self'; "
                 "script-src 'self'; connect-src 'self'; frame-ancestors 'none'")
-        if request.url.path != "/healthz":
+        if request.url.path not in ("/healthz", "/readyz"):
             log.info(json.dumps({"id": request_id, "method": request.method, "path": request.url.path,
                                  "status": response.status_code, "ms": int((time.monotonic() - started) * 1000)}))
         return response
@@ -181,6 +181,20 @@ def create_app(settings: Settings | None = None, client=None, store: Store | Non
     @app.get("/healthz")
     def healthz():
         return {"ok": True}
+
+    @app.get("/readyz")
+    def readyz():
+        """Ready to answer shoppers: the database works and the store answers."""
+        checks = {"database": storage.ping(), "store": True}
+        if isinstance(store, ShopifyStore):
+            try:
+                store.get_policy("shipping")
+                store.search_products("", limit=1)
+            except StoreError:
+                checks["store"] = False
+        ok = all(checks.values())
+        body = {"ok": ok, **checks, "demo": isinstance(client, DemoClient)}
+        return JSONResponse(body, status_code=200 if ok else 503)
 
     @app.get("/api/info")
     def info():

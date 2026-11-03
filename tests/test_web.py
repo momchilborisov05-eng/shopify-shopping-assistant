@@ -100,6 +100,7 @@ def test_pages_and_headers(client):
     assert len(client.get("/api/catalog").json()["products"]) == 12
     assert client.get("/api/products/nope").status_code == 404
     assert client.get("/healthz").json() == {"ok": True}
+    assert client.get("/readyz").json() == {"ok": True, "database": True, "store": True, "demo": True}
 
 
 def test_cors_for_the_shop_domain(tmp_path):

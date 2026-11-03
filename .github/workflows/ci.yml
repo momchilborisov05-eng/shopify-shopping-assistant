@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -17,18 +20,63 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: pip install -r requirements.txt -r requirements-dev.txt
       - run: ruff check .
+      # A scripted Claude and a fake Shopify API: the tests never call either and cost nothing.
       - run: pytest -q
 
-  docker:
+  image:
+    name: Docker build, smoke test, push
     runs-on: ubuntu-latest
     needs: test
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
-      - run: docker build -t shop-assistant .
-      - name: Smoke test in demo mode
+      - run: docker build -t shop-assistant:ci .
+      - name: Start the container in demo mode and ask a question
         run: |
-          docker run -d --name app -p 8000:8000 -e DEMO_MODE=1 shop-assistant
+          docker run -d --name app -p 8000:8000 -e DEMO_MODE=1 shop-assistant:ci
           for i in $(seq 1 30); do curl -sf localhost:8000/healthz && break; sleep 1; done
+          curl -sf localhost:8000/readyz
           curl -sf -X POST localhost:8000/api/chat -H 'Content-Type: application/json' \
             -d '{"message": "waterproof jacket"}' | grep -q '"type": "products"'
-          docker logs app
+      - name: Show container logs
+        if: always()
+        run: docker logs app
+      - name: Push to GitHub Container Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          image=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
+          docker tag shop-assistant:ci "$image:${{ github.sha }}"
+          docker tag shop-assistant:ci "$image:latest"
+          docker push "$image:${{ github.sha }}"
+          docker push "$image:latest"
+
+  deploy:
+    name: Deploy to Azure Container Apps
+    runs-on: ubuntu-latest
+    needs: image
+    # Runs only once the Azure connection is configured (README, "Deploy to Azure").
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.AZURE_CONTAINER_APP != ''
+    environment: production
+    permissions:
+      id-token: write   # OpenID Connect sign-in to Azure, no stored password
+      contents: read
+    steps:
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: Roll out the new image
+        run: |
+          image=$(echo "$IMAGE" | tr '[:upper:]' '[:lower:]')
+          az containerapp update --name "${{ vars.AZURE_CONTAINER_APP }}" \
+            --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" --image "$image:${{ github.sha }}"
+      - name: Wait until the new revision is ready
+        run: |
+          url=$(az containerapp show -n "${{ vars.AZURE_CONTAINER_APP }}" -g "${{ vars.AZURE_RESOURCE_GROUP }}" \
+                --query properties.configuration.ingress.fqdn -o tsv)
+          for i in $(seq 1 30); do curl -fsS "https://$url/readyz" && exit 0; sleep 10; done
+          exit 1
