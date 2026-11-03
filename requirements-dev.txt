@@ -1,0 +1,4 @@
+pytest>=8.0
+ruff>=0.6
+# only for redrawing the demo images (data/make_images.py)
+pillow>=10.0

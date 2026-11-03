@@ -1,0 +1,27 @@
+[project]
+name = "shopify-shopping-assistant"
+version = "1.0.0"
+description = "An AI shopping assistant for Shopify stores: product search, sizes and stock, policies, order tracking and handoff to the team, built on Claude tool use."
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+# B008: FastAPI's Depends() in defaults is the framework's idiom.
+ignore = ["B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+# The system prompt is prose; its lines are long on purpose.
+"assistant/agent.py" = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["assistant", "web"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

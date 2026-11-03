@@ -1,0 +1,972 @@
+{
+  "shop": {
+    "name": "Nordvik Outdoor",
+    "domain": "nordvik-outdoor.myshopify.com",
+    "currency": "EUR",
+    "support_email": "help@nordvik-outdoor.example",
+    "support_hours": "Mon-Fri 9:00-18:00 (EET)"
+  },
+  "products": [
+    {
+      "handle": "alpine-shell-jacket",
+      "title": "Alpine Shell Jacket",
+      "category": "Jackets",
+      "price": 189.0,
+      "compare_at_price": null,
+      "rating": 4.8,
+      "reviews": 214,
+      "tags": [
+        "jacket",
+        "waterproof",
+        "rain",
+        "shell",
+        "hiking",
+        "hardshell",
+        "windproof",
+        "unisex"
+      ],
+      "description": "A 3-layer waterproof and breathable shell for hiking, ski touring and city rain. Fully taped seams, a helmet-compatible hood and pit zips for ventilation. Packs into its own chest pocket.",
+      "features": [
+        "Waterproof 20,000 mm / breathable 20,000 g",
+        "Fully taped seams",
+        "Helmet-compatible hood",
+        "Pit zips",
+        "Weight 410 g (size M)"
+      ],
+      "materials": "3-layer recycled nylon with a PFC-free water-repellent finish",
+      "care": "Machine wash at 30 °C, tumble dry low to restore water repellency",
+      "fit": "Regular fit with room for a fleece underneath. Take your usual size.",
+      "options": [
+        "Size",
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "41001",
+          "sku": "ASJ-BLK-S",
+          "options": {
+            "Size": "S",
+            "Color": "Black"
+          },
+          "inventory": 6
+        },
+        {
+          "id": "41002",
+          "sku": "ASJ-BLK-M",
+          "options": {
+            "Size": "M",
+            "Color": "Black"
+          },
+          "inventory": 2
+        },
+        {
+          "id": "41003",
+          "sku": "ASJ-BLK-L",
+          "options": {
+            "Size": "L",
+            "Color": "Black"
+          },
+          "inventory": 9
+        },
+        {
+          "id": "41004",
+          "sku": "ASJ-BLK-XL",
+          "options": {
+            "Size": "XL",
+            "Color": "Black"
+          },
+          "inventory": 0
+        },
+        {
+          "id": "41005",
+          "sku": "ASJ-FOR-S",
+          "options": {
+            "Size": "S",
+            "Color": "Forest Green"
+          },
+          "inventory": 4
+        },
+        {
+          "id": "41006",
+          "sku": "ASJ-FOR-M",
+          "options": {
+            "Size": "M",
+            "Color": "Forest Green"
+          },
+          "inventory": 7
+        },
+        {
+          "id": "41007",
+          "sku": "ASJ-FOR-L",
+          "options": {
+            "Size": "L",
+            "Color": "Forest Green"
+          },
+          "inventory": 0
+        },
+        {
+          "id": "41008",
+          "sku": "ASJ-FOR-XL",
+          "options": {
+            "Size": "XL",
+            "Color": "Forest Green"
+          },
+          "inventory": 3
+        }
+      ]
+    },
+    {
+      "handle": "summit-down-jacket",
+      "title": "Summit Down Jacket",
+      "category": "Jackets",
+      "price": 249.0,
+      "compare_at_price": 299.0,
+      "rating": 4.9,
+      "reviews": 167,
+      "tags": [
+        "jacket",
+        "down",
+        "insulated",
+        "winter",
+        "warm",
+        "puffer",
+        "cold"
+      ],
+      "description": "Our warmest jacket: 800-fill responsibly sourced down in a light ripstop shell. Warm down to about -15 °C when active. Water-resistant, not waterproof: wear the Alpine Shell over it in heavy rain.",
+      "features": [
+        "800-fill RDS-certified down",
+        "Warm to about -15 °C",
+        "Water-resistant shell",
+        "Insulated hood",
+        "Weight 520 g (size M)"
+      ],
+      "materials": "Ripstop recycled polyester shell, 800-fill goose down (RDS)",
+      "care": "Machine wash at 30 °C with down detergent, tumble dry with tennis balls",
+      "fit": "Slim fit. Size up if you want to layer a thick fleece underneath.",
+      "options": [
+        "Size",
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "42001",
+          "sku": "SDJ-NAV-S",
+          "options": {
+            "Size": "S",
+            "Color": "Navy"
+          },
+          "inventory": 3
+        },
+        {
+          "id": "42002",
+          "sku": "SDJ-NAV-M",
+          "options": {
+            "Size": "M",
+            "Color": "Navy"
+          },
+          "inventory": 5
+        },
+        {
+          "id": "42003",
+          "sku": "SDJ-NAV-L",
+          "options": {
+            "Size": "L",
+            "Color": "Navy"
+          },
+          "inventory": 1
+        },
+        {
+          "id": "42004",
+          "sku": "SDJ-RUS-S",
+          "options": {
+            "Size": "S",
+            "Color": "Rust"
+          },
+          "inventory": 0
+        },
+        {
+          "id": "42005",
+          "sku": "SDJ-RUS-M",
+          "options": {
+            "Size": "M",
+            "Color": "Rust"
+          },
+          "inventory": 4
+        },
+        {
+          "id": "42006",
+          "sku": "SDJ-RUS-L",
+          "options": {
+            "Size": "L",
+            "Color": "Rust"
+          },
+          "inventory": 6
+        }
+      ]
+    },
+    {
+      "handle": "trail-fleece",
+      "title": "Trail Grid Fleece",
+      "category": "Midlayers",
+      "price": 79.0,
+      "compare_at_price": null,
+      "rating": 4.7,
+      "reviews": 301,
+      "tags": [
+        "fleece",
+        "midlayer",
+        "warm",
+        "layering",
+        "hiking",
+        "sweater",
+        "hoodie"
+      ],
+      "description": "A breathable grid fleece that keeps you warm on the move. Works on its own on cool days or as a midlayer under a shell.",
+      "features": [
+        "Grid fleece that dries fast",
+        "Half-zip for ventilation",
+        "Thumb loops",
+        "Weight 290 g (size M)"
+      ],
+      "materials": "Recycled polyester grid fleece",
+      "care": "Machine wash at 30 °C, do not tumble dry",
+      "fit": "Athletic fit. Take your usual size.",
+      "options": [
+        "Size",
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "43001",
+          "sku": "TGF-GRY-S",
+          "options": {
+            "Size": "S",
+            "Color": "Stone Grey"
+          },
+          "inventory": 12
+        },
+        {
+          "id": "43002",
+          "sku": "TGF-GRY-M",
+          "options": {
+            "Size": "M",
+            "Color": "Stone Grey"
+          },
+          "inventory": 15
+        },
+        {
+          "id": "43003",
+          "sku": "TGF-GRY-L",
+          "options": {
+            "Size": "L",
+            "Color": "Stone Grey"
+          },
+          "inventory": 8
+        },
+        {
+          "id": "43004",
+          "sku": "TGF-ORA-M",
+          "options": {
+            "Size": "M",
+            "Color": "Ember Orange"
+          },
+          "inventory": 6
+        },
+        {
+          "id": "43005",
+          "sku": "TGF-ORA-L",
+          "options": {
+            "Size": "L",
+            "Color": "Ember Orange"
+          },
+          "inventory": 2
+        }
+      ]
+    },
+    {
+      "handle": "merino-base-layer",
+      "title": "Merino 200 Base Layer Top",
+      "category": "Base layers",
+      "price": 59.0,
+      "compare_at_price": null,
+      "rating": 4.6,
+      "reviews": 128,
+      "tags": [
+        "merino",
+        "wool",
+        "base layer",
+        "thermal",
+        "underwear",
+        "long sleeve",
+        "skiing"
+      ],
+      "description": "Soft 200 g/m² merino wool that keeps you warm when wet and doesn't smell after days on the trail.",
+      "features": [
+        "100% merino wool, 200 g/m²",
+        "Odour resistant",
+        "Flatlock seams",
+        "Mulesing-free wool"
+      ],
+      "materials": "100% merino wool (mulesing-free)",
+      "care": "Wool cycle at 30 °C, dry flat",
+      "fit": "Close fit. Take your usual size.",
+      "options": [
+        "Size"
+      ],
+      "variants": [
+        {
+          "id": "44001",
+          "sku": "MBL-S",
+          "options": {
+            "Size": "S"
+          },
+          "inventory": 10
+        },
+        {
+          "id": "44002",
+          "sku": "MBL-M",
+          "options": {
+            "Size": "M"
+          },
+          "inventory": 0
+        },
+        {
+          "id": "44003",
+          "sku": "MBL-L",
+          "options": {
+            "Size": "L"
+          },
+          "inventory": 5
+        }
+      ]
+    },
+    {
+      "handle": "ridge-hiking-boots",
+      "title": "Ridge Mid Hiking Boots",
+      "category": "Footwear",
+      "price": 169.0,
+      "compare_at_price": null,
+      "rating": 4.7,
+      "reviews": 389,
+      "tags": [
+        "boots",
+        "shoes",
+        "hiking",
+        "waterproof",
+        "trekking",
+        "mountain",
+        "footwear"
+      ],
+      "description": "Waterproof mid-cut hiking boots with a grippy rubber sole for rocky trails. Comfortable out of the box, no long break-in.",
+      "features": [
+        "Waterproof breathable membrane",
+        "Vibram-style rubber outsole",
+        "Mid-cut ankle support",
+        "Weight 590 g per boot (EU 42)"
+      ],
+      "materials": "Nubuck leather and recycled mesh upper, rubber outsole",
+      "care": "Brush off dirt, dry away from direct heat, re-proof with wax",
+      "fit": "True to size. If you are between sizes, or wear thick socks, take the larger size.",
+      "options": [
+        "Size"
+      ],
+      "variants": [
+        {
+          "id": "45001",
+          "sku": "RHB-39",
+          "options": {
+            "Size": "EU 39"
+          },
+          "inventory": 3
+        },
+        {
+          "id": "45002",
+          "sku": "RHB-40",
+          "options": {
+            "Size": "EU 40"
+          },
+          "inventory": 5
+        },
+        {
+          "id": "45003",
+          "sku": "RHB-41",
+          "options": {
+            "Size": "EU 41"
+          },
+          "inventory": 0
+        },
+        {
+          "id": "45004",
+          "sku": "RHB-42",
+          "options": {
+            "Size": "EU 42"
+          },
+          "inventory": 7
+        },
+        {
+          "id": "45005",
+          "sku": "RHB-43",
+          "options": {
+            "Size": "EU 43"
+          },
+          "inventory": 4
+        },
+        {
+          "id": "45006",
+          "sku": "RHB-44",
+          "options": {
+            "Size": "EU 44"
+          },
+          "inventory": 2
+        },
+        {
+          "id": "45007",
+          "sku": "RHB-45",
+          "options": {
+            "Size": "EU 45"
+          },
+          "inventory": 1
+        }
+      ]
+    },
+    {
+      "handle": "trail-runner-shoes",
+      "title": "Swift Trail Running Shoes",
+      "category": "Footwear",
+      "price": 129.0,
+      "compare_at_price": 149.0,
+      "rating": 4.5,
+      "reviews": 142,
+      "tags": [
+        "shoes",
+        "running",
+        "trail running",
+        "trainers",
+        "sneakers",
+        "light",
+        "footwear"
+      ],
+      "description": "Light, cushioned trail running shoes with 5 mm lugs for mud and loose ground. Not waterproof, so they drain and dry fast.",
+      "features": [
+        "5 mm lugs",
+        "Rock plate",
+        "8 mm drop",
+        "Weight 290 g (EU 42)"
+      ],
+      "materials": "Recycled mesh upper, EVA midsole, rubber outsole",
+      "care": "Hand wash, air dry",
+      "fit": "Runs half a size small. Take half a size up from your usual size.",
+      "options": [
+        "Size"
+      ],
+      "variants": [
+        {
+          "id": "46001",
+          "sku": "STR-40",
+          "options": {
+            "Size": "EU 40"
+          },
+          "inventory": 4
+        },
+        {
+          "id": "46002",
+          "sku": "STR-41",
+          "options": {
+            "Size": "EU 41"
+          },
+          "inventory": 6
+        },
+        {
+          "id": "46003",
+          "sku": "STR-42",
+          "options": {
+            "Size": "EU 42"
+          },
+          "inventory": 3
+        },
+        {
+          "id": "46004",
+          "sku": "STR-43",
+          "options": {
+            "Size": "EU 43"
+          },
+          "inventory": 0
+        },
+        {
+          "id": "46005",
+          "sku": "STR-44",
+          "options": {
+            "Size": "EU 44"
+          },
+          "inventory": 5
+        }
+      ]
+    },
+    {
+      "handle": "fjell-daypack-28",
+      "title": "Fjell Daypack 28L",
+      "category": "Backpacks",
+      "price": 95.0,
+      "compare_at_price": null,
+      "rating": 4.8,
+      "reviews": 256,
+      "tags": [
+        "backpack",
+        "daypack",
+        "bag",
+        "hiking",
+        "travel",
+        "laptop",
+        "rucksack"
+      ],
+      "description": "A 28-litre daypack for hikes and city days. Ventilated back panel, a padded laptop sleeve (up to 15\") and a built-in rain cover.",
+      "features": [
+        "28 L",
+        "Ventilated mesh back panel",
+        "15\" laptop sleeve",
+        "Built-in rain cover",
+        "Hip belt with pockets",
+        "Weight 980 g"
+      ],
+      "materials": "Recycled ripstop nylon, PFC-free coating",
+      "care": "Hand wash with mild soap, air dry",
+      "fit": "Fits torso lengths 40-52 cm.",
+      "options": [
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "47001",
+          "sku": "FDP-BLK",
+          "options": {
+            "Color": "Black"
+          },
+          "inventory": 14
+        },
+        {
+          "id": "47002",
+          "sku": "FDP-OLV",
+          "options": {
+            "Color": "Olive"
+          },
+          "inventory": 8
+        },
+        {
+          "id": "47003",
+          "sku": "FDP-SKY",
+          "options": {
+            "Color": "Sky Blue"
+          },
+          "inventory": 0
+        }
+      ]
+    },
+    {
+      "handle": "expedition-pack-55",
+      "title": "Expedition Pack 55+10L",
+      "category": "Backpacks",
+      "price": 229.0,
+      "compare_at_price": null,
+      "rating": 4.9,
+      "reviews": 88,
+      "tags": [
+        "backpack",
+        "trekking",
+        "multi-day",
+        "camping",
+        "large",
+        "rucksack",
+        "hiking"
+      ],
+      "description": "A trekking pack for multi-day trips: 55 litres plus a 10-litre extendable lid, an adjustable back system and a load-bearing hip belt.",
+      "features": [
+        "55 + 10 L",
+        "Adjustable back length",
+        "Front U-zip access",
+        "Sleeping bag compartment",
+        "Weight 1.9 kg"
+      ],
+      "materials": "Recycled 420D nylon",
+      "care": "Hand wash with mild soap, air dry",
+      "fit": "Adjustable for torso lengths 42-56 cm.",
+      "options": [
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "48001",
+          "sku": "EXP-GRY",
+          "options": {
+            "Color": "Graphite"
+          },
+          "inventory": 5
+        },
+        {
+          "id": "48002",
+          "sku": "EXP-RED",
+          "options": {
+            "Color": "Ember Red"
+          },
+          "inventory": 2
+        }
+      ]
+    },
+    {
+      "handle": "thermo-bottle",
+      "title": "Thermo Bottle 0.75L",
+      "category": "Accessories",
+      "price": 29.0,
+      "compare_at_price": null,
+      "rating": 4.8,
+      "reviews": 512,
+      "tags": [
+        "bottle",
+        "thermos",
+        "flask",
+        "insulated",
+        "drink",
+        "gift",
+        "coffee",
+        "tea"
+      ],
+      "description": "A vacuum-insulated steel bottle that keeps drinks hot for 12 hours and cold for 24. Leak-proof lid that doubles as a cup.",
+      "features": [
+        "0.75 L",
+        "Hot 12 h / cold 24 h",
+        "Leak-proof",
+        "BPA-free",
+        "Weight 390 g"
+      ],
+      "materials": "18/8 stainless steel",
+      "care": "Hand wash only",
+      "fit": "",
+      "options": [
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "49001",
+          "sku": "TB-STL",
+          "options": {
+            "Color": "Steel"
+          },
+          "inventory": 40
+        },
+        {
+          "id": "49002",
+          "sku": "TB-FOR",
+          "options": {
+            "Color": "Forest Green"
+          },
+          "inventory": 22
+        },
+        {
+          "id": "49003",
+          "sku": "TB-ORA",
+          "options": {
+            "Color": "Ember Orange"
+          },
+          "inventory": 9
+        }
+      ]
+    },
+    {
+      "handle": "carbon-trekking-poles",
+      "title": "Carbon Trekking Poles (pair)",
+      "category": "Accessories",
+      "price": 69.0,
+      "compare_at_price": 89.0,
+      "rating": 4.6,
+      "reviews": 97,
+      "tags": [
+        "poles",
+        "trekking poles",
+        "hiking",
+        "sticks",
+        "walking",
+        "carbon",
+        "gift"
+      ],
+      "description": "Light carbon poles that fold to 38 cm. Cork grips, quick-lock length adjustment from 110 to 130 cm.",
+      "features": [
+        "Carbon fibre",
+        "Folds to 38 cm",
+        "Adjustable 110-130 cm",
+        "Cork grips",
+        "Weight 360 g per pair"
+      ],
+      "materials": "Carbon fibre shafts, cork grips, tungsten tips",
+      "care": "Dry after use before folding",
+      "fit": "Suits heights from about 160 to 195 cm.",
+      "options": [],
+      "variants": [
+        {
+          "id": "50001",
+          "sku": "CTP",
+          "options": {},
+          "inventory": 11
+        }
+      ]
+    },
+    {
+      "handle": "wool-beanie",
+      "title": "Ribbed Wool Beanie",
+      "category": "Accessories",
+      "price": 25.0,
+      "compare_at_price": null,
+      "rating": 4.7,
+      "reviews": 203,
+      "tags": [
+        "beanie",
+        "hat",
+        "wool",
+        "winter",
+        "warm",
+        "gift",
+        "head"
+      ],
+      "description": "A warm, soft beanie in merino wool. One size.",
+      "features": [
+        "Merino wool blend",
+        "Double layer at the ears",
+        "One size"
+      ],
+      "materials": "70% merino wool, 30% recycled nylon",
+      "care": "Wool cycle at 30 °C, dry flat",
+      "fit": "One size, stretches to fit head sizes 54-61 cm.",
+      "options": [
+        "Color"
+      ],
+      "variants": [
+        {
+          "id": "51001",
+          "sku": "WB-BLK",
+          "options": {
+            "Color": "Black"
+          },
+          "inventory": 30
+        },
+        {
+          "id": "51002",
+          "sku": "WB-RUS",
+          "options": {
+            "Color": "Rust"
+          },
+          "inventory": 18
+        },
+        {
+          "id": "51003",
+          "sku": "WB-CRM",
+          "options": {
+            "Color": "Cream"
+          },
+          "inventory": 0
+        }
+      ]
+    },
+    {
+      "handle": "headlamp-400",
+      "title": "Beacon 400 Headlamp",
+      "category": "Accessories",
+      "price": 45.0,
+      "compare_at_price": null,
+      "rating": 4.6,
+      "reviews": 154,
+      "tags": [
+        "headlamp",
+        "light",
+        "torch",
+        "camping",
+        "night",
+        "running",
+        "rechargeable",
+        "gift"
+      ],
+      "description": "A 400-lumen rechargeable headlamp with a red-light mode and up to 40 hours of battery life on low.",
+      "features": [
+        "400 lumens",
+        "USB-C rechargeable",
+        "Red light mode",
+        "IPX4 splash-proof",
+        "Up to 40 h on low",
+        "Weight 78 g"
+      ],
+      "materials": "Polycarbonate housing, elastic strap",
+      "care": "Wipe clean",
+      "fit": "",
+      "options": [],
+      "variants": [
+        {
+          "id": "52001",
+          "sku": "BH400",
+          "options": {},
+          "inventory": 25
+        }
+      ]
+    }
+  ],
+  "policies": {
+    "shipping": {
+      "title": "Shipping",
+      "body": "Bulgaria: delivery with Speedy or Econt in 1-2 business days, €4.90, free on orders over €60. Delivery to a Speedy or Econt office or to your address. Cash on delivery is available in Bulgaria. EU: 3-6 business days with DHL, €9.90, free on orders over €120. Orders placed before 14:00 on a business day ship the same day. You get a tracking link by email as soon as the parcel ships. We don't ship outside the EU yet."
+    },
+    "returns": {
+      "title": "Returns and exchanges",
+      "body": "You can return unused items with their tags within 30 days of delivery for a full refund. Start a return from the link in your order confirmation email or by writing to help@nordvik-outdoor.example with your order number. Returns from Bulgaria are free with a Speedy label we send you; from the rest of the EU the return shipping is €6.90. Exchanges for a different size or colour are free and we send the new item as soon as the return is scanned by the courier. Refunds go back to the original payment method within 5 business days of the return arriving. Footwear must be returned clean and not worn outdoors."
+    },
+    "payment": {
+      "title": "Payment",
+      "body": "We accept Visa, Mastercard, Apple Pay, Google Pay and PayPal. In Bulgaria you can also pay cash on delivery (€1.50 fee). Prices include VAT. All prices are in euro."
+    },
+    "warranty": {
+      "title": "Warranty and repairs",
+      "body": "All products have a 2-year warranty against manufacturing defects. Down and shell jackets have a 5-year warranty on seams and zips. If something breaks, write to help@nordvik-outdoor.example with your order number and a photo; we repair it for free, replace it or refund it. Normal wear and tear and damage from misuse are not covered, but we offer paid repairs at cost."
+    },
+    "size_guide": {
+      "title": "Size guide",
+      "body": "Tops and jackets (chest circumference): XS 84-88 cm, S 88-94 cm, M 94-100 cm, L 100-106 cm, XL 106-112 cm, XXL 112-118 cm. If you are between two sizes, take the larger size for jackets you want to layer and the smaller size for base layers. Footwear: EU sizes, foot length EU 39 = 25.0 cm, EU 40 = 25.5 cm, EU 41 = 26.5 cm, EU 42 = 27.0 cm, EU 43 = 27.5 cm, EU 44 = 28.5 cm, EU 45 = 29.0 cm. Each product page also says how the product fits."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "Email help@nordvik-outdoor.example or use this chat and ask for a person. Our team answers Monday to Friday, 9:00-18:00 (EET), usually within 2 hours. Showroom: 12 Vitosha Blvd, Sofia, open Monday to Saturday 10:00-19:00."
+    },
+    "discounts": {
+      "title": "Discounts and gift cards",
+      "body": "Sign up for the newsletter to get 10% off your first order. Gift cards from €25 to €200 are sent by email and are valid for 2 years. Discount codes can't be combined, and they don't apply to items that are already on sale."
+    }
+  },
+  "orders": [
+    {
+      "number": "1001",
+      "email": "maria.ivanova@example.com",
+      "customer_first_name": "Maria",
+      "created_at": "2026-10-29",
+      "financial_status": "paid",
+      "fulfillment_status": "in_transit",
+      "total": 218.0,
+      "items": [
+        {
+          "title": "Alpine Shell Jacket",
+          "variant": "M / Forest Green",
+          "quantity": 1
+        },
+        {
+          "title": "Thermo Bottle 0.75L",
+          "variant": "Steel",
+          "quantity": 1
+        }
+      ],
+      "shipping_method": "Speedy, to address",
+      "tracking": {
+        "company": "Speedy",
+        "number": "SP6612043918",
+        "url": "https://www.speedy.bg/en/track-shipment?shipmentNumber=SP6612043918"
+      },
+      "estimated_delivery": "2026-11-04"
+    },
+    {
+      "number": "1002",
+      "email": "georgi.petrov@example.com",
+      "customer_first_name": "Georgi",
+      "created_at": "2026-10-20",
+      "financial_status": "paid",
+      "fulfillment_status": "delivered",
+      "total": 169.0,
+      "items": [
+        {
+          "title": "Ridge Mid Hiking Boots",
+          "variant": "EU 43",
+          "quantity": 1
+        }
+      ],
+      "shipping_method": "Econt, to office",
+      "tracking": {
+        "company": "Econt",
+        "number": "1055123498761",
+        "url": "https://www.econt.com/services/track-shipment/1055123498761"
+      },
+      "delivered_at": "2026-10-22"
+    },
+    {
+      "number": "1003",
+      "email": "anna.schmidt@example.com",
+      "customer_first_name": "Anna",
+      "created_at": "2026-11-02",
+      "financial_status": "paid",
+      "fulfillment_status": "unfulfilled",
+      "total": 324.0,
+      "items": [
+        {
+          "title": "Expedition Pack 55+10L",
+          "variant": "Graphite",
+          "quantity": 1
+        },
+        {
+          "title": "Fjell Daypack 28L",
+          "variant": "Olive",
+          "quantity": 1
+        }
+      ],
+      "shipping_method": "DHL, EU",
+      "tracking": null,
+      "estimated_delivery": "2026-11-09"
+    },
+    {
+      "number": "1004",
+      "email": "ivan.dimitrov@example.com",
+      "customer_first_name": "Ivan",
+      "created_at": "2026-09-30",
+      "financial_status": "refunded",
+      "fulfillment_status": "returned",
+      "total": 79.0,
+      "items": [
+        {
+          "title": "Trail Grid Fleece",
+          "variant": "L / Stone Grey",
+          "quantity": 1
+        }
+      ],
+      "shipping_method": "Speedy, to office",
+      "tracking": null,
+      "refunded_at": "2026-10-14"
+    },
+    {
+      "number": "1005",
+      "email": "elena.koleva@example.com",
+      "customer_first_name": "Elena",
+      "created_at": "2026-10-31",
+      "financial_status": "paid",
+      "fulfillment_status": "partially_fulfilled",
+      "total": 274.0,
+      "items": [
+        {
+          "title": "Summit Down Jacket",
+          "variant": "S / Rust",
+          "quantity": 1,
+          "note": "back-ordered, ships around 2026-11-10"
+        },
+        {
+          "title": "Ribbed Wool Beanie",
+          "variant": "Rust",
+          "quantity": 1
+        }
+      ],
+      "shipping_method": "Speedy, to address",
+      "tracking": {
+        "company": "Speedy",
+        "number": "SP6612077402",
+        "url": "https://www.speedy.bg/en/track-shipment?shipmentNumber=SP6612077402"
+      },
+      "estimated_delivery": "2026-11-03"
+    }
+  ],
+  "policies_bg": {
+    "shipping": "България: доставка със Speedy или Еконт за 1-2 работни дни, €4.90, безплатна при поръчка над €60. До офис или до адрес, с възможност за наложен платеж. ЕС: 3-6 работни дни с DHL, €9.90, безплатна над €120. Поръчки до 14:00 в работен ден тръгват същия ден, а линк за проследяване идва по имейл веднага щом пратката тръгне.",
+    "returns": "Можете да върнете неизползвани продукти с етикетите в рамките на 30 дни от доставката и да получите парите си обратно. Връщането от България е безплатно с товарителница на Speedy, която ви изпращаме; от останалите страни в ЕС струва €6.90. Замяната за друг размер или цвят е безплатна. Парите се връщат по същия начин на плащане до 5 работни дни след като пратката пристигне при нас. Обувките трябва да са чисти и да не са носени навън.",
+    "payment": "Приемаме Visa, Mastercard, Apple Pay, Google Pay и PayPal. В България може и с наложен платеж (такса €1.50). Цените са с ДДС и са в евро.",
+    "warranty": "Всички продукти имат 2 години гаранция за производствени дефекти, а пухените якета и якетата shell - 5 години за шевовете и циповете. Ако нещо се повреди, пишете на help@nordvik-outdoor.example с номера на поръчката и снимка: ще го поправим безплатно, ще го заменим или ще ви върнем парите.",
+    "size_guide": "Горнища и якета (обиколка на гърдите): XS 84-88 см, S 88-94 см, M 94-100 см, L 100-106 см, XL 106-112 см, XXL 112-118 см. Ако сте между два размера, вземете по-големия за якета, под които ще носите полар, и по-малкия за термобельо. Обувки (дължина на стъпалото): EU 39 = 25.0 см, EU 40 = 25.5 см, EU 41 = 26.5 см, EU 42 = 27.0 см, EU 43 = 27.5 см, EU 44 = 28.5 см, EU 45 = 29.0 см.",
+    "contact": "Пишете на help@nordvik-outdoor.example или помолете в този чат да ви свържа с човек. Екипът отговаря от понеделник до петък, 9:00-18:00, обикновено до 2 часа. Шоурум: бул. Витоша 12, София, понеделник-събота 10:00-19:00.",
+    "discounts": "Абонирайте се за бюлетина и получавате 10% отстъпка за първата поръчка. Подаръчните карти са от €25 до €200, идват по имейл и важат 2 години. Кодовете за отстъпка не се комбинират и не важат за продукти, които вече са в промоция."
+  }
+}

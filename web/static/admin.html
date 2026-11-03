@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>AI assistant · Team dashboard</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="/static/fonts/fonts.css">
+  <link rel="stylesheet" href="/static/admin.css">
+  <script src="/static/admin.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top__inner">
+      <div class="top__title">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
+        </span>
+        <div class="top__text">
+          <h1 id="title">AI assistant</h1>
+          <span class="model" id="model" hidden></span>
+        </div>
+      </div>
+      <div class="top__actions">
+        <label class="sr-only" for="period">Period</label>
+        <select class="select" id="period">
+          <option value="7">Last 7 days</option>
+          <option value="30" selected>Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+        <button class="btn btn--ghost" type="button" id="refresh" aria-label="Refresh">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v4h-4"/></svg>
+          <span class="btn__label">Refresh</span>
+        </button>
+        <a class="btn btn--primary" id="store-link" href="/" hidden>Open the store</a>
+      </div>
+    </div>
+    <div class="wrap top__status">
+      <span id="updated" aria-live="polite"></span>
+    </div>
+  </header>
+
+  <main class="wrap main" id="main">
+    <div class="alert" id="alert" role="alert" hidden></div>
+
+    <section aria-label="Key numbers">
+      <div class="kpis" id="kpis">
+        <div class="kpi"><p class="kpi__label">Conversations</p><p class="kpi__value" data-kpi="conversations">—</p><p class="kpi__sub" data-kpi-sub="conversations"></p></div>
+        <div class="kpi"><p class="kpi__label">Resolved by AI</p><p class="kpi__value" data-kpi="resolved">—</p><p class="kpi__sub" data-kpi-sub="resolved"></p></div>
+        <div class="kpi"><p class="kpi__label">Open tickets</p><p class="kpi__value" data-kpi="open">—</p><p class="kpi__sub" data-kpi-sub="open"></p></div>
+        <div class="kpi"><p class="kpi__label">Avg. cost / conversation</p><p class="kpi__value" data-kpi="cpc">—</p><p class="kpi__sub" data-kpi-sub="cpc"></p></div>
+        <div class="kpi"><p class="kpi__label">Rating</p><p class="kpi__value" data-kpi="rating">—</p><p class="kpi__sub" data-kpi-sub="rating"></p></div>
+        <div class="kpi"><p class="kpi__label">Total AI cost</p><p class="kpi__value" data-kpi="cost">—</p><p class="kpi__sub" data-kpi-sub="cost"></p></div>
+      </div>
+    </section>
+
+    <section class="panels" aria-label="What the assistant handled">
+      <div class="panel">
+        <h2 class="panel__title">What shoppers search for</h2>
+        <ul class="bars" id="bars-searches"></ul>
+      </div>
+      <div class="panel">
+        <h2 class="panel__title">Policy questions</h2>
+        <ul class="bars" id="bars-policies"></ul>
+      </div>
+      <div class="panel">
+        <h2 class="panel__title">Assistant actions</h2>
+        <ul class="bars" id="bars-tools"></ul>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="tickets-title">
+      <div class="card__head">
+        <div>
+          <h2 class="card__title" id="tickets-title">Tickets for the team</h2>
+          <p class="card__sub">Conversations the assistant handed to a person.</p>
+        </div>
+        <div class="seg" role="group" aria-label="Ticket status">
+          <button class="seg__btn" type="button" data-status="open" aria-pressed="true">Open</button>
+          <button class="seg__btn" type="button" data-status="closed" aria-pressed="false">Closed</button>
+          <button class="seg__btn" type="button" data-status="" aria-pressed="false">All</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="tickets-table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Created</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Email</th>
+              <th scope="col">Priority</th>
+              <th scope="col">Status</th>
+              <th scope="col"><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="tickets"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="tickets-empty" hidden></div>
+    </section>
+
+    <section class="card" aria-labelledby="convs-title">
+      <div class="card__head">
+        <div>
+          <h2 class="card__title" id="convs-title">Conversations</h2>
+          <p class="card__sub">The latest 100 chats. Click one to read it.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table table--click" id="convs-table">
+          <thead>
+            <tr>
+              <th scope="col">When</th>
+              <th scope="col">First question</th>
+              <th scope="col">Lang.</th>
+              <th scope="col" class="num">Messages</th>
+              <th scope="col" class="num">Cost</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Handoff</th>
+            </tr>
+          </thead>
+          <tbody id="convs"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="convs-empty" hidden></div>
+    </section>
+
+    <p class="foot">Costs are estimates from token usage. Shopper emails are never stored in the analytics tables.</p>
+  </main>
+
+  <!-- Transcript side panel -->
+  <div class="scrim" id="scrim" hidden></div>
+  <aside class="side" id="side" aria-labelledby="side-title" aria-hidden="true" tabindex="-1">
+    <div class="side__head">
+      <div class="side__headtext">
+        <h2 class="side__title" id="side-title">Conversation</h2>
+        <p class="side__meta" id="side-meta"></p>
+      </div>
+      <button class="icon-btn" type="button" id="side-close" aria-label="Close transcript">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="side__tickets" id="side-tickets"></div>
+    <div class="side__body" id="side-body"></div>
+  </aside>
+
+  <!-- Token dialog -->
+  <div class="gate" id="gate" hidden>
+    <form class="gate__box" id="gate-form">
+      <h2 class="gate__title">Team sign-in</h2>
+      <p class="gate__text" id="gate-text">This dashboard is protected. Paste the admin token from the server's <code>ADMIN_TOKEN</code> setting.</p>
+      <label class="gate__label" for="token">Admin token</label>
+      <input class="gate__input" id="token" type="password" autocomplete="current-password" required>
+      <p class="gate__error" id="gate-error" hidden>That token was not accepted.</p>
+      <button class="btn btn--primary btn--block" type="submit">Open dashboard</button>
+      <p class="gate__note">Kept only in this tab (session storage).</p>
+    </form>
+  </div>
+</body>
+</html>

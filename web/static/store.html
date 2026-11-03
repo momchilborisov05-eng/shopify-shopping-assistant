@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nordvik Outdoor · Gear for the long way up</title>
+  <meta name="description" content="Nordvik Outdoor: outdoor clothing and gear from Sofia. A demo store for an AI shopping assistant.">
+  <meta name="theme-color" content="#1f3d2b">
+  <link rel="stylesheet" href="/static/fonts/fonts.css">
+  <link rel="stylesheet" href="/static/store.css">
+  <script src="/static/store.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="topbar">
+    <div class="wrap topbar__inner">
+      <p class="topbar__msg">Free delivery in Bulgaria over €60 · 30-day returns</p>
+      <span class="pill">Demo store · the chat is the product</span>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="/" aria-label="Nordvik Outdoor, home">
+        <span class="brand__word">NORDVIK</span>
+        <span class="brand__sub">OUTDOOR</span>
+      </a>
+      <form class="search" id="search-form" role="search">
+        <label class="sr-only" for="search">Search products</label>
+        <svg class="search__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search" type="search" placeholder="Search jackets, boots, packs…" autocomplete="off">
+      </form>
+      <button class="cart-btn" id="cart-open" type="button" aria-label="Open cart" aria-controls="cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-btn__count" id="cart-count" hidden>0</span>
+      </button>
+    </div>
+    <nav class="catnav" aria-label="Categories">
+      <div class="wrap">
+        <ul class="catnav__list" id="catnav">
+          <li><a class="catnav__link is-active" href="/" data-category="">All</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Home -->
+    <div id="view-home" hidden>
+      <section class="hero">
+        <div class="wrap hero__inner">
+          <p class="eyebrow eyebrow--light">Autumn / Winter collection</p>
+          <h1 class="hero__title">Gear for the long way up</h1>
+          <p class="hero__sub">Shells, layers and packs designed in Sofia and tested on Rila, Pirin and the Balkan ridge. Built to last, made to be repaired.</p>
+          <div class="hero__actions">
+            <a class="btn btn--light" href="#shop" id="hero-cta">Shop the collection</a>
+            <button class="btn btn--ghost-light" type="button" data-ask="I'm hiking in Rila in October. What should I wear?">Ask the assistant</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="values" aria-label="Why Nordvik">
+        <div class="wrap values__grid">
+          <div class="value">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg>
+            <div><h2 class="value__title">Free delivery</h2><p class="value__text">Across Bulgaria on orders over €60, in 1–2 working days.</p></div>
+          </div>
+          <div class="value">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>
+            <div><h2 class="value__title">30-day returns</h2><p class="value__text">Changed your mind? Send it back unworn within 30 days.</p></div>
+          </div>
+          <div class="value">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v6c0 4.2 3 7.7 7 9 4-1.3 7-4.8 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            <div><h2 class="value__title">2-year warranty</h2><p class="value__text">On everything we make, plus free repairs for seams and zips.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="shop" id="shop" aria-labelledby="shop-title">
+        <div class="wrap">
+          <div class="shop__head">
+            <div>
+              <p class="eyebrow">The collection</p>
+              <h2 class="section-title" id="shop-title">All products</h2>
+            </div>
+            <p class="shop__count" id="shop-count" aria-live="polite"></p>
+          </div>
+          <div class="grid" id="grid" aria-busy="true"></div>
+          <div class="empty" id="grid-empty" hidden>
+            <p class="empty__title">Nothing matches that search.</p>
+            <p class="empty__text">Try another word, or ask the assistant — it understands “something warm for winter camping under €150”.</p>
+            <button class="btn btn--outline" type="button" id="clear-filters">Show all products</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="assist" aria-labelledby="assist-title">
+        <div class="wrap assist__inner">
+          <div class="assist__copy">
+            <p class="eyebrow">New · in English and Bulgarian</p>
+            <h2 class="section-title" id="assist-title">Ask our AI assistant</h2>
+            <p class="assist__text">It knows every product, size and policy in the shop, can check where your order is, and hands you to a person when it should. Try one of these:</p>
+          </div>
+          <div class="assist__questions">
+            <button class="question" type="button" data-ask="Which jacket is best for rain and wind on a day hike?">Which jacket is best for rain and wind on a day hike?</button>
+            <button class="question" type="button" data-ask="Do you have waterproof boots in EU 42 under €200?">Do you have waterproof boots in EU 42 under €200?</button>
+            <button class="question" type="button" data-ask="Where is my order #1001? My email is maria.ivanova@example.com">Where is my order #1001? (demo email: maria.ivanova@example.com)</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Product -->
+    <div id="view-product" hidden>
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <ol class="crumbs__list" id="crumbs"></ol>
+        </nav>
+        <div class="pdp" id="pdp" aria-busy="true">
+          <div class="pdp__media">
+            <div class="media media--pdp" id="pdp-media"></div>
+          </div>
+          <div class="pdp__info" id="pdp-info"></div>
+        </div>
+        <div class="pdp-details" id="pdp-details"></div>
+      </div>
+    </div>
+
+    <!-- Not found -->
+    <div id="view-missing" hidden>
+      <div class="wrap missing">
+        <p class="eyebrow">404</p>
+        <h1 class="section-title">This trail doesn’t go anywhere</h1>
+        <p class="missing__text">We couldn’t find that product. It may have sold out for the season or moved.</p>
+        <a class="btn btn--primary" href="/">Back to the shop</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div class="footer__brand">
+        <a class="brand brand--footer" href="/"><span class="brand__word">NORDVIK</span><span class="brand__sub">OUTDOOR</span></a>
+        <p class="footer__text">Outdoor clothing and gear, designed in Sofia for the Balkan mountains.</p>
+      </div>
+      <div>
+        <h2 class="footer__title">Shop</h2>
+        <ul class="footer__list" id="footer-cats"></ul>
+      </div>
+      <div>
+        <h2 class="footer__title">Help</h2>
+        <ul class="footer__list">
+          <li><button class="footer__link" type="button" data-ask="How long does delivery take and how much does it cost?">Delivery</button></li>
+          <li><button class="footer__link" type="button" data-ask="How do returns work?">Returns &amp; exchanges</button></li>
+          <li><button class="footer__link" type="button" data-ask="Can you help me find my size?">Size guide</button></li>
+          <li><button class="footer__link" type="button" data-ask="Where is my order?">Track an order</button></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer__title">About</h2>
+        <ul class="footer__list">
+          <li><span class="footer__plain">Our story</span></li>
+          <li><span class="footer__plain">Repairs &amp; warranty</span></li>
+          <li><span class="footer__plain">Sofia, Bulgaria</span></li>
+          <li><a class="footer__link" href="/admin">Team dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer__bottom">
+      <p>© Nordvik Outdoor · demo data</p>
+      <p>A fictional shop built to show an AI shopping assistant for Shopify.</p>
+    </div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div class="overlay" id="cart-overlay" hidden></div>
+  <aside class="drawer" id="cart" aria-label="Shopping cart" aria-hidden="true" tabindex="-1">
+    <div class="drawer__head">
+      <h2 class="drawer__title">Your cart <span class="drawer__count" id="drawer-count"></span></h2>
+      <button class="icon-btn" type="button" id="cart-close" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body">
+      <ul class="cart-list" id="cart-list"></ul>
+      <div class="cart-empty" id="cart-empty">
+        <p class="cart-empty__title">Your cart is empty</p>
+        <p class="cart-empty__text">Add something from the shop, or ask the assistant to find it for you.</p>
+      </div>
+    </div>
+    <div class="drawer__foot">
+      <div class="drawer__row"><span>Subtotal</span><strong id="cart-subtotal">€0.00</strong></div>
+      <p class="drawer__note" id="cart-note">Taxes included. Free delivery in Bulgaria over €60.</p>
+      <button class="btn btn--primary btn--block" type="button" disabled>Checkout (demo)</button>
+      <p class="drawer__demo">This is a demo store — nothing will be charged.</p>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="/widget.js" defer data-color="#1f3d2b" data-title="Nordvik Outdoor" data-lang="auto"></script>
+</body>
+</html>
