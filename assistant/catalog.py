@@ -18,43 +18,17 @@ import json
 import re
 import threading
 import time
-import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol
 
 import httpx
 
+from .search import SearchEngine, parse_query
+
 SHOP_REFRESH_SECONDS = 15 * 60
 POLICY_TOPICS = ("shipping", "returns", "payment", "warranty", "size_guide", "contact", "discounts")
 LOW_STOCK = 3
-
-# Shoppers write in their own words and language. These map common words (BG and EN)
-# to the words the catalog uses, so search works in demo mode without a model in front.
-SYNONYMS = {
-    "яке": "jacket", "якета": "jacket", "шуба": "jacket", "пухено": "down", "пухенка": "down",
-    "дъжд": "rain", "дъждобран": "rain", "водоустойчиво": "waterproof", "водоустойчиви": "waterproof",
-    "водоустойчив": "waterproof", "непромокаемо": "waterproof", "топло": "warm", "топла": "warm",
-    "зима": "winter", "зимно": "winter", "студ": "cold", "поларено": "fleece", "полар": "fleece",
-    "блуза": "midlayer", "термо": "thermal", "бельо": "base layer", "вълна": "wool", "мерино": "merino",
-    "обувки": "shoes", "обувка": "shoes", "боти": "boots", "туристически": "hiking", "бягане": "running",
-    "маратонки": "trainers", "раница": "backpack", "раници": "backpack", "чанта": "bag",
-    "лаптоп": "laptop", "бутилка": "bottle", "термос": "thermos", "шапка": "beanie", "шапки": "beanie",
-    "челник": "headlamp", "фенер": "headlamp", "щеки": "poles", "щека": "poles", "подарък": "gift",
-    "палатка": "camping", "къмпинг": "camping", "планина": "mountain", "преход": "hiking",
-    "trainers": "running", "sneakers": "running", "torch": "headlamp", "flashlight": "headlamp",
-    "rucksack": "backpack", "puffer": "down", "raincoat": "rain", "coat": "jacket", "hat": "beanie",
-    "flask": "bottle",
-}
-
-
-STOPWORDS = {
-    "i", "a", "an", "the", "for", "and", "or", "with", "me", "my", "need", "want", "looking", "search", "some",
-    "something", "do", "you", "have", "any", "under", "below", "up", "to", "max", "eur", "euro", "euros",
-    "търся", "искам", "трябва", "ми", "за", "и", "с", "на", "в", "до", "под", "имате", "ли", "някакво",
-    "някаква", "някакви", "нещо", "евро", "лв", "моля",
-}
-
 
 class StoreError(RuntimeError):
     """The store could not be reached or returned an error."""
@@ -65,7 +39,8 @@ class Store(Protocol):
     currency: str
 
     def search_products(self, query: str, category: str | None = None, max_price: float | None = None,
-                        in_stock_only: bool = False, limit: int = 6) -> list[dict]: ...
+                        in_stock_only: bool = False, limit: int = 6, *, min_price: float | None = None,
+                        size: str | None = None, colour: str | None = None) -> list[dict]: ...
 
     def get_product(self, handle: str) -> dict | None: ...
 
@@ -78,11 +53,6 @@ class Store(Protocol):
 
 def normalize_order_number(value: str) -> str:
     return re.sub(r"[^0-9A-Za-z]", "", value or "").upper()
-
-
-def _words(text: str) -> list[str]:
-    text = unicodedata.normalize("NFKC", text or "").lower()
-    return re.findall(r"[\w']+", text)
 
 
 def _stock_label(quantity: int | None, available: bool) -> str:
@@ -109,6 +79,7 @@ class DemoStore:
         self._policies = data["policies"]
         self._policies_bg = data.get("policies_bg", {})  # only for demo mode's canned Bulgarian answers
         self._orders = {normalize_order_number(o["number"]): o for o in data["orders"]}
+        self.engine = SearchEngine(data["products"])
 
     def policy_bg(self, topic: str) -> str:
         return self._policies_bg.get(topic) or self._policies[topic]["body"]
@@ -119,37 +90,21 @@ class DemoStore:
     def all_products(self) -> list[dict]:
         return [self._summary(p) for p in self._products.values()]
 
-    def search_products(self, query, category=None, max_price=None, in_stock_only=False, limit=6):
-        terms = set()
-        for word in _words(query):
-            if word.isdigit() or word in STOPWORDS:
-                continue
-            terms.add(word)
-            if word in SYNONYMS:
-                terms.update(_words(SYNONYMS[word]))
-            if word.endswith("s") and len(word) > 3:
-                terms.add(word[:-1])
-        scored = []
-        for product in self._products.values():
-            if category and product["category"].lower() != category.lower():
-                continue
-            if max_price is not None and product["price"] > max_price:
-                continue
-            summary = self._summary(product)
-            if in_stock_only and not summary["in_stock"]:
-                continue
-            title = set(_words(product["title"]))
-            tags = set(_words(" ".join(product["tags"] + [product["category"]])))
-            body = set(_words(product["description"]))
-            score = sum(3 * (t in title) + 2 * (t in tags) + (t in body) for t in terms)
-            if terms and not score:
-                continue
-            scored.append((score, product["rating"], summary))
-        scored.sort(key=lambda s: (s[0], s[1]), reverse=True)
-        if scored and terms:  # drop weak matches: one shared word like "waterproof" isn't enough
-            best = scored[0][0]
-            scored = [s for s in scored if s[0] >= best * 0.6]
-        return [s[2] for s in scored[:limit]]
+    def search_products(self, query, category=None, max_price=None, in_stock_only=False, limit=6, *,
+                        min_price=None, size=None, colour=None):
+        """BM25F search with filters parsed from the words (assistant/search.py)."""
+        found = self.engine.search(query or "", category=category, min_price=min_price, max_price=max_price,
+                                   size=size, colour=colour, in_stock=in_stock_only, limit=limit)
+        out = []
+        for hit in found.hits:
+            summary = self._summary(hit.product)
+            if hit.variants:  # the shopper asked for a size or colour: say which variants have it
+                summary["matching_variants"] = [
+                    {"title": " / ".join(v["options"].values()), "stock": _stock_label(v["inventory"],
+                                                                                         v["inventory"] > 0)}
+                    for v in hit.variants[:6]]
+            out.append(summary)
+        return out
 
     def get_product(self, handle):
         product = self._products.get((handle or "").strip().lower())
@@ -397,13 +352,21 @@ class ShopifyStore:
     def categories(self) -> list[str]:
         return self._categories
 
-    def search_products(self, query, category=None, max_price=None, in_stock_only=False, limit=6):
-        search = " ".join(_words(query)[:12])
+    def search_products(self, query, category=None, max_price=None, in_stock_only=False, limit=6, *,
+                        min_price=None, size=None, colour=None):
+        # Prices parsed from the words ("under 200") become Shopify filters instead of search words.
+        # Size and colour are left to get_product, which reads every variant's stock.
+        parsed = parse_query(query or "")
+        max_price = max_price if max_price is not None else parsed.max_price
+        min_price = min_price if min_price is not None else parsed.min_price
+        search = " ".join(parsed.terms[:12])
         parts = [search] if search else []
         if category:
             parts.append(f'product_type:"{category}"')
         if max_price is not None:
             parts.append(f"price:<={max_price:g}")
+        if min_price is not None:
+            parts.append(f"price:>={min_price:g}")
         parts.append("status:active")
         nodes = self._gql(SEARCH_QUERY, {"query": " ".join(parts), "first": min(limit * 2, 20)})["products"]["nodes"]
         results = [self._summary(n) for n in nodes]
@@ -411,6 +374,8 @@ class ShopifyStore:
             results = [r for r in results if r["in_stock"]]
         if max_price is not None:
             results = [r for r in results if r["price"] <= max_price]
+        if min_price is not None:
+            results = [r for r in results if r["price"] >= min_price]
         return results[:limit]
 
     def get_product(self, handle):

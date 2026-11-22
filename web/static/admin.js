@@ -11,7 +11,8 @@
     get_product: 'Product details',
     get_store_policy: 'Policy answers',
     lookup_order: 'Order lookups',
-    handoff_to_human: 'Handoffs to the team'
+    handoff_to_human: 'Handoffs to the team',
+    grounding_guard: 'Unverified numbers removed'
   };
   var LANGS = { en: '🇬🇧', bg: '🇧🇬', de: '🇩🇪', fr: '🇫🇷', es: '🇪🇸', it: '🇮🇹', ro: '🇷🇴', el: '🇬🇷', tr: '🇹🇷', ru: '🇷🇺' };
 

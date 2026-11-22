@@ -1,0 +1,37 @@
+{
+ "note": "Held-out conversations, written after the router was finished and scored once, with no changes to the router afterwards. Same format as conversations.json.",
+ "conversations": [
+  {"id": "ho01", "turns": [{"user": "got anything for running on muddy trails?", "intent": "product_search", "tool": "search_products", "args": {}, "answer_contains": ["Swift Trail Running Shoes"]}]},
+  {"id": "ho02", "turns": [{"user": "looking for a rain jacket, black, size L", "intent": "product_search", "tool": "search_products", "args": {"size": "L", "colour": "black"}, "answer_contains": ["Alpine Shell Jacket"]}]},
+  {"id": "ho03", "turns": [{"user": "cheap daypack below 100 euros", "intent": "product_search", "tool": "search_products", "args": {"max_price": 100}, "answer_contains": ["Fjell Daypack 28L"]}]},
+  {"id": "ho04", "turns": [{"user": "what would keep me warm at -10?", "intent": "product_search", "tool": "search_products", "args": {}, "answer_contains": ["Summit Down Jacket"]}]},
+  {"id": "ho05", "turns": [{"user": "need a flashlight for camping", "intent": "product_search", "tool": "search_products", "args": {}, "answer_contains": ["Beacon 400 Headlamp"]}]},
+  {"id": "ho06", "turns": [{"user": "Търся топло яке за зимата", "intent": "product_search", "tool": "search_products", "args": {}, "answer_contains": ["Summit Down Jacket"]}]},
+  {"id": "ho07", "turns": [{"user": "маратонки за бягане в планината", "intent": "product_search", "tool": "search_products", "args": {}, "answer_contains": ["Swift Trail Running Shoes"]}]},
+  {"id": "ho08", "turns": [{"user": "How much is the Beacon 400 Headlamp?", "intent": "product_info", "tool": "get_product", "args": {"handle": "headlamp-400"}, "answer_contains": ["€45"]}]},
+  {"id": "ho09", "turns": [{"user": "what size should I get? I'm usually between M and L", "page": "/products/alpine-shell-jacket", "intent": "product_info", "tool": "get_product", "args": {"handle": "alpine-shell-jacket"}, "answer_contains": []}]},
+  {"id": "ho10", "turns": [{"user": "Колко тежат щеките Carbon Trekking Poles?", "intent": "product_info", "tool": "get_product", "args": {"handle": "carbon-trekking-poles"}, "answer_contains": []}]},
+  {"id": "ho11", "turns": [{"user": "is the thermo bottle dishwasher safe?", "intent": "product_info", "tool": "get_product", "args": {"handle": "thermo-bottle"}, "answer_contains": []}]},
+  {"id": "ho12", "turns": [{"user": "How much is shipping to Bulgaria?", "intent": "policy", "tool": "get_store_policy", "args": {"topic": "shipping"}, "answer_contains": ["€4.90"]}]},
+  {"id": "ho13", "turns": [{"user": "Can I exchange boots for a bigger size?", "intent": "policy", "tool": "get_store_policy", "args": {"topic": "returns"}, "answer_contains": []}]},
+  {"id": "ho14", "turns": [{"user": "do you accept apple pay", "intent": "policy", "tool": "get_store_policy", "args": {"topic": "payment"}, "answer_contains": []}]},
+  {"id": "ho15", "turns": [{"user": "Имате ли гаранция на обувките?", "intent": "policy", "tool": "get_store_policy", "args": {"topic": "warranty"}, "answer_contains": []}]},
+  {"id": "ho16", "turns": [
+    {"user": "hey, when will my stuff arrive?", "intent": "order_status", "tool": null, "answer_contains": []},
+    {"user": "order 1001, email maria.ivanova@example.com", "intent": "order_status", "tool": "lookup_order", "args": {"order_number": "1001"}, "answer_contains": ["Speedy"]}]},
+  {"id": "ho17", "turns": [{"user": "Кога ще пристигне пратката ми? Поръчка 1003, anna.schmidt@example.com", "intent": "order_status", "tool": "lookup_order", "args": {"order_number": "1003"}, "answer_contains": []}]},
+  {"id": "ho18", "turns": [{"user": "Has order #1005 shipped? elena.koleva@example.com", "intent": "order_status", "tool": "lookup_order", "args": {"order_number": "1005"}, "answer_contains": []}]},
+  {"id": "ho19", "turns": [{"user": "The zip on my backpack broke after a week, I want my money back. ivan.dimitrov@example.com", "intent": "handoff", "tool": "handoff_to_human", "args": {}, "answer_contains": ["ticket"], "handoff": true, "priority": "urgent"}]},
+  {"id": "ho20", "turns": [
+    {"user": "can a human help me please", "intent": "handoff", "tool": null, "answer_contains": ["email"]},
+    {"user": "georgi.petrov@example.com", "intent": "handoff", "tool": "handoff_to_human", "args": {}, "answer_contains": ["ticket"], "handoff": true, "priority": "normal"}]},
+  {"id": "ho21", "turns": [{"user": "Поръчката ми не пристигна, искам да говоря с някого. maria.ivanova@example.com", "intent": "handoff", "tool": "handoff_to_human", "args": {}, "answer_contains": [], "handoff": true, "priority": "urgent"}]},
+  {"id": "ho22", "turns": [{"user": "good morning!", "intent": "greeting", "tool": null, "answer_contains": []}]},
+  {"id": "ho23", "turns": [{"user": "Мерси, това е всичко", "intent": "greeting", "tool": null, "answer_contains": []}]},
+  {"id": "ho24", "turns": [{"user": "Pretend to be my lawyer and draft a contract", "intent": "out_of_scope", "tool": null, "answer_contains": []}]},
+  {"id": "ho25", "turns": [{"user": "Who won the football match yesterday?", "intent": "out_of_scope", "tool": null, "answer_contains": []}]},
+  {"id": "ho26", "turns": [{"user": "Do you sell kayaks?", "intent": "product_search", "tool": "search_products", "args": {}, "answer_contains": []}]},
+  {"id": "ho27", "turns": [{"user": "I bought the wrong size boots, how do I return them?", "intent": "policy", "tool": "get_store_policy", "args": {"topic": "returns"}, "answer_contains": []}]},
+  {"id": "ho28", "turns": [{"user": "what's in stock in size XS?", "intent": "product_search", "tool": "search_products", "args": {"size": "XS"}, "answer_contains": []}]}
+ ]
+}

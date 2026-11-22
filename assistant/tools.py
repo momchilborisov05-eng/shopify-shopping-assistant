@@ -22,8 +22,9 @@ TOOLS: list[dict] = [
         "description": (
             "Search the store's catalog. Use it whenever the shopper asks for a product, a recommendation, "
             "a gift idea or a price range. Write the query as a few English keywords (for example "
-            "'waterproof jacket' or 'trail running shoes'), whatever language the shopper uses. "
-            "Returns up to 6 products with price, stock and rating."
+            "'waterproof jacket' or 'trail running shoes'), whatever language the shopper uses. Put a size, "
+            "colour or price range in the filter fields. Returns up to 6 products with price, stock and rating, "
+            "and, when a size or colour was given, the variants that have it with their stock."
         ),
         "input_schema": {
             "type": "object",
@@ -31,6 +32,9 @@ TOOLS: list[dict] = [
                 "query": {"type": "string", "description": "A few English keywords."},
                 "category": {"type": "string", "description": "Optional exact category name from the system prompt."},
                 "max_price": {"type": "number", "description": "Optional maximum price in the store currency."},
+                "min_price": {"type": "number", "description": "Optional minimum price in the store currency."},
+                "size": {"type": "string", "description": "Optional size, like M, XL or 42 (EU shoe size)."},
+                "colour": {"type": "string", "description": "Optional colour in English, like blue or black."},
                 "in_stock_only": {"type": "boolean", "description": "Only products that can be bought now."},
             },
             "required": ["query"],
@@ -153,12 +157,20 @@ def run_tool(ctx: ToolContext, name: str, args: Any) -> tuple[dict, bool]:
 def _search(ctx: ToolContext, args: dict) -> dict:
     query = _str(args, "query", max_len=120)
     category = _str(args, "category", required=False, max_len=60)
-    max_price = args.get("max_price")
-    if max_price is not None and (not isinstance(max_price, (int, float)) or isinstance(max_price, bool)
-                                  or max_price <= 0):
-        raise ToolInputError("'max_price' must be a positive number")
+    prices = {}
+    for key in ("max_price", "min_price"):
+        value = args.get(key)
+        if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or value <= 0):
+            raise ToolInputError(f"'{key}' must be a positive number")
+        prices[key] = value
+    if prices["min_price"] and prices["max_price"] and prices["min_price"] > prices["max_price"]:
+        raise ToolInputError("'min_price' is above 'max_price'")
+    size = _str(args, "size", required=False, max_len=8)
+    colour = _str(args, "colour", required=False, max_len=30)
     in_stock = args.get("in_stock_only") is True
-    products = ctx.store.search_products(query, category=category, max_price=max_price, in_stock_only=in_stock)
+    filters = {k: v for k, v in (("min_price", prices["min_price"]), ("size", size), ("colour", colour)) if v}
+    products = ctx.store.search_products(query, category=category, max_price=prices["max_price"],
+                                         in_stock_only=in_stock, **filters)
     for p in products:
         ctx.products_seen[p["handle"]] = p
     return {"products": [{k: v for k, v in p.items() if k not in ("image", "default_variant_id")}

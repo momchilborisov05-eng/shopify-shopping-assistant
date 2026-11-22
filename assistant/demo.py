@@ -18,39 +18,30 @@ import uuid
 
 from anthropic.types.beta import BetaMessage
 
-from .catalog import STOPWORDS, DemoStore
+from .catalog import DemoStore
+from .router import (
+    ASK_EMAIL_FOR_TEAM,
+    ASK_ORDER,
+    ASK_ORDER_EMAIL,
+    DialogueState,
+    ProductMatcher,
+    Route,
+    conversation_lang,
+    route,
+)
 
 DEMO_MODEL = "demo"
-EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
-ORDER = re.compile(r"(?:#|№|\b)(\d{4,6})\b")
-PRICE_CAP = re.compile(r"(?:under|below|up to|max|до|под|не повече от)\s*€?\s*(\d{2,4})", re.I)
 SIZE = re.compile(r"\b(xxl|xl|xs|s|m|l)\b|\b(?:eu\s*)?(3\d|4\d)\b", re.I)
-
-HUMAN = ("human", "person", "agent", "operator", "someone real", "complain", "damaged", "broken", "wrong item",
-         "refund", "cancel", "човек", "оператор", "служител", "колега", "оплакване", "повреден", "счупен",
-         "сгрешен", "грешен продукт", "възстанов", "откажа", "анулир", "жалба")
-ORDER_WORDS = ("order", "parcel", "package", "tracking", "track", "where is my", "delivery status", "поръчка",
-               "поръчката", "пратка", "пратката", "проследяв", "къде е", "кога ще пристигне")
-POLICY_WORDS = {
-    "returns": ("return", "exchange", "send back", "връщ", "върна", "замяна", "заменя", "размяна"),
-    "shipping": ("shipping", "delivery", "deliver", "courier", "speedy", "econt", "доставка", "доставя",
-                 "куриер", "еконт", "спиди", "колко време"),
-    "payment": ("pay", "card", "paypal", "cash on delivery", "плащане", "плати", "карта", "наложен"),
-    "warranty": ("warranty", "guarantee", "repair", "гаранция", "ремонт"),
-    "discounts": ("discount", "promo", "coupon", "code", "gift card", "voucher", "отстъпка", "промо", "код",
-                  "ваучер", "подаръчна карта"),
-    "contact": ("contact", "phone", "showroom", "store address", "контакт", "телефон", "шоурум", "магазин на"),
-    "size_guide": ("size guide", "size chart", "which size", "what size", "таблица с размери", "какъв размер",
-                   "кой размер", "размерите"),
+DECLINE = {
+    "injection": {"en": "I can only help with shopping at {store}: products, sizes, delivery, returns and orders. "
+                        "What can I find for you?",
+                  "bg": "Мога да помагам само с пазаруването в {store}: продукти, размери, доставка, връщане и "
+                        "поръчки. Какво да ви намеря?"},
+    "off_topic": {"en": "That's outside what I can help with here. I'm the {store} assistant: ask me about our "
+                        "gear, sizes, delivery or your order.",
+                  "bg": "С това не мога да помогна. Аз съм асистентът на {store}: питайте ме за продукти, "
+                        "размери, доставка или поръчка."},
 }
-PRODUCT_DETAIL = ("size", "sizes", "colour", "color", "stock", "available", "fit", "material", "waterproof",
-                  "weight", "размер", "номер", "цвят", "цвета", "налич", "има ли", "имате ли", "материал",
-                  "тежи", "стои")
-GREETING = ("hi", "hello", "hey", "здравей", "здравейте", "добър ден", "привет", "хей")
-ASK_EMAIL_FOR_TEAM = {"en": "So that a colleague can reply, what's your email address?",
-                      "bg": "За да ви отговори колега, напишете ми имейла си."}
-ASK_ORDER = {"en": "I can check that. What's your order number and the email address you used for the order?",
-             "bg": "Мога да проверя. Напишете ми номера на поръчката и имейла, с който сте поръчали."}
 STATUS = {
     "in_transit": ("is on its way with {company}", "пътува със {company}"),
     "delivered": ("was delivered on {delivered_at}", "е доставена на {delivered_at}"),
@@ -58,19 +49,6 @@ STATUS = {
     "returned": ("was returned and refunded on {refunded_at}", "е върната и парите са възстановени на {refunded_at}"),
     "partially_fulfilled": ("is partly shipped with {company}", "е изпратена частично със {company}"),
 }
-
-
-def _lang(text: str) -> str:
-    return "bg" if re.search(r"[\u0400-\u04FF]", text) else "en"
-
-
-def _conversation_lang(shopper: list[tuple[str, str | None]]) -> str:
-    """The language of the latest message that has words in it (not just an order number or an email)."""
-    for text, _ in reversed(shopper):
-        words = re.findall(r"[^\W\d_]{3,}", EMAIL.sub(" ", text))
-        if words:
-            return _lang(" ".join(words))
-    return "en"
 
 
 def _money(value: float) -> str:
@@ -99,21 +77,16 @@ def _assistant_texts(messages: list) -> list[str]:
             for m in messages if m["role"] == "assistant"]
 
 
-def _has(text: str, words) -> bool:
-    low = text.lower()
-    return any(re.search(r"(?<!\w)" + re.escape(w), low) for w in words)
-
-
 class _Stream:
-    def __init__(self, message: BetaMessage, text: str):
+    def __init__(self, message: BetaMessage, text: str, delay: float = 0.012):
         self.message = message
-        self.text_stream = self._words(text)
+        self.text_stream = self._words(text, delay)
 
     @staticmethod
-    def _words(text):
+    def _words(text, delay):
         for i, word in enumerate(text.split(" ")):
-            if word:
-                time.sleep(0.012)
+            if word and delay:
+                time.sleep(delay)  # a typing effect in the widget; 0 in tests and the benchmark
             yield word if i == 0 else " " + word
 
     def __enter__(self):
@@ -135,85 +108,61 @@ def _message(content: list[dict], stop_reason: str, text_len: int = 0) -> BetaMe
 
 
 class DemoClient:
-    """Implements the one call the assistant makes: client.beta.messages.stream(...)."""
+    """Implements the one call the assistant makes: client.beta.messages.stream(...).
 
-    def __init__(self, store: DemoStore):
+    Plans with the deterministic router (assistant/router.py) instead of a model."""
+
+    def __init__(self, store: DemoStore, word_delay: float = 0.012):
         self.store = store
+        self.word_delay = word_delay
+        self.matcher = ProductMatcher(store.all_products())
         self.beta = self
         self.messages = self
+        self.last_route: Route | None = None
 
     def stream(self, *, messages, **_):
         last = messages[-1]["content"]
         if isinstance(last, list) and last and all(b.get("type") == "tool_result" for b in last):
             text = self._answer(messages)
-            return _Stream(_message([{"type": "text", "text": text}], "end_turn", len(text)), text)
+            return _Stream(_message([{"type": "text", "text": text}], "end_turn", len(text)), text, self.word_delay)
         plan = self._plan(messages)
         if isinstance(plan, str):
-            return _Stream(_message([{"type": "text", "text": plan}], "end_turn", len(plan)), plan)
+            return _Stream(_message([{"type": "text", "text": plan}], "end_turn", len(plan)), plan, self.word_delay)
         name, args = plan
         block = {"type": "tool_use", "id": f"toolu_demo_{uuid.uuid4().hex[:12]}", "name": name, "input": args}
-        return _Stream(_message([block], "tool_use"), "")
+        return _Stream(_message([block], "tool_use"), "", self.word_delay)
 
     # ----- deciding what to do -----
 
     def _plan(self, messages: list):
-        shopper = _shopper_texts(messages)
-        text, page_handle = shopper[-1]
-        lang = _conversation_lang(shopper)
-        everything = " ".join(t for t, _ in shopper)
-        previous_answer = (_assistant_texts(messages) or [""])[-1]
-        emails = EMAIL.findall(everything)
-        email = emails[-1] if emails else None
-        numbers = ORDER.findall(everything)
-        number = numbers[-1] if numbers else None
-
-        wants_team = _has(text, HUMAN) or (ASK_EMAIL_FOR_TEAM[lang] in previous_answer
-                                          or ASK_EMAIL_FOR_TEAM["en"] in previous_answer)
-        if wants_team:
-            if not email:
+        state = DialogueState(_shopper_texts(messages), (_assistant_texts(messages) or [""])[-1])
+        r = self.last_route = route(state, self.matcher)
+        lang, slots = r.lang, r.slots
+        if r.intent == "handoff":
+            if r.missing:
                 return ASK_EMAIL_FOR_TEAM[lang]
-            first_request = next((t for t, _ in shopper if _has(t, HUMAN)), text)
-            return "handoff_to_human", {"reason": f"Shopper wrote: {first_request[:300]}", "email": email,
-                                        "priority": "urgent" if _has(first_request, ("damaged", "broken",
-                                                                                     "повреден", "счупен"))
-                                        else "normal"}
-
-        asked_for_order = ASK_ORDER["en"] in previous_answer or ASK_ORDER["bg"] in previous_answer
-        if _has(text, ORDER_WORDS) or asked_for_order or (ORDER.search(text) and EMAIL.search(text)):
-            if number and email:
-                return "lookup_order", {"order_number": number, "email": email}
-            if number and not email:
-                return ("And the email address you used for order #{n}?" if lang == "en"
-                        else "А с кой имейл е направена поръчка №{n}?").format(n=number)
-            return ASK_ORDER[lang]
-
-        product = self._product_in(text) or (page_handle if _has(text, PRODUCT_DETAIL) or len(text) < 40 else None)
-        for topic, words in POLICY_WORDS.items():
-            if _has(text, words) and not (topic == "size_guide" and product):
-                return "get_store_policy", {"topic": topic}
-        if product:
-            return "get_product", {"handle": product}
-
-        words = re.findall(r"\w+", text.lower())
-        if words and len(words) <= 3 and all(w in " ".join(GREETING) for w in words):
+            return "handoff_to_human", slots
+        if r.intent == "order_status":
+            if slots.get("order_number") and not slots.get("email"):
+                return ASK_ORDER_EMAIL[lang].format(n=slots["order_number"])
+            if r.missing:
+                return ASK_ORDER[lang]
+            return "lookup_order", slots
+        if r.intent == "policy":
+            return "get_store_policy", slots
+        if r.intent == "product_info":
+            return "get_product", {"handle": slots["handle"]}
+        if r.intent == "out_of_scope":
+            return DECLINE[slots["kind"]][lang].format(store=self.store.name)
+        if r.intent == "greeting":
+            if slots.get("kind") == "thanks":
+                return "You're welcome! Anything else I can help with?" if lang == "en" else \
+                    "Моля! С какво друго да помогна?"
             return (f"Hi! I'm the {self.store.name} assistant. I can help you find gear, choose a size, or "
                     "check your order. What are you looking for?" if lang == "en" else
                     f"Здравейте! Аз съм асистентът на {self.store.name}. Мога да ви помогна да изберете "
                     "екипировка и размер или да проверя поръчка. Какво търсите?")
-        keywords = [w for w in words if w not in STOPWORDS and not w.isdigit() and len(w) > 1]
-        args = {"query": " ".join(keywords)[:120] or text[:120]}
-        cap = PRICE_CAP.search(text)
-        if cap:
-            args["max_price"] = float(cap.group(1))
-        return "search_products", args
-
-    def _product_in(self, text: str) -> str | None:
-        low = text.lower()
-        for product in self.store.all_products():
-            first = product["title"].split()[0].lower()
-            if product["handle"] in low or product["title"].lower() in low or (len(first) > 4 and first in low):
-                return product["handle"]
-        return None
+        return "search_products", slots
 
     # ----- answering from the tool results -----
 
@@ -224,7 +173,7 @@ class DemoClient:
         result = json.loads(result_block["content"])
         shopper = _shopper_texts(messages)
         text = shopper[-1][0]
-        lang = _conversation_lang(shopper)
+        lang = conversation_lang(shopper)
         if result_block.get("is_error"):
             return ("Sorry, something went wrong on my side. Shall I pass your question to the team?" if lang == "en"
                     else "Съжалявам, нещо се обърка. Да предам ли въпроса ви на колега?")
@@ -245,7 +194,11 @@ class DemoClient:
                         else f" (намалено от {_money(p['compare_at_price'])})")
             rating = f" · ★ {p['rating']}" if p.get("rating") else ""
             stock = "" if p["in_stock"] else (" · sold out right now" if lang == "en" else " · в момента е изчерпан")
-            lines.append(f"- **{p['title']}**: {_money(p['price'])}{sale}{rating}{stock}")
+            variants = ""
+            if p.get("matching_variants"):
+                listed = ", ".join(f"{v['title']} ({v['stock']})" for v in p["matching_variants"][:3])
+                variants = f" · {listed}"
+            lines.append(f"- **{p['title']}**: {_money(p['price'])}{sale}{rating}{stock}{variants}")
         lines.append("Shall I check sizes and stock for one of them?" if lang == "en"
                      else "Да проверя ли размерите и наличността на някой от тях?")
         return "\n".join(lines)

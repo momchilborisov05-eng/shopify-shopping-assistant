@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Shopify AI Shopping Assistant</title><style>
+body { margin:0; width:1280px; height:720px; overflow:hidden; font-family:"Segoe UI",system-ui,sans-serif; background:linear-gradient(135deg,#07130d,#1c3b2b 52%,#2f6b4c); color:#fff; position:relative; }
+  body::after { content:""; position:absolute; inset:0; background:radial-gradient(circle at 85% 10%, rgba(253,224,171,.20), transparent 45%); pointer-events:none; }
+  .left { position:absolute; left:64px; top:44px; width:560px; z-index:1; }
+  .badge { display:inline-block; background:rgba(255,255,255,.15); padding:12px 18px; border-radius:99px; font-size:14px; margin-bottom:16px; }
+  h1 { font-size:52px; line-height:1.02; margin:0 0 10px; letter-spacing:-1px; }
+  .tag { font-size:20px; color:#d1fae5; margin:0 0 18px; }
+  pre { background:#020617; color:#cbd5e1; border-radius:12px; padding:14px 16px; font:13.5px/1.6 Consolas, monospace; margin:0 0 18px; box-shadow:0 10px 30px rgba(0,0,0,.35); white-space:pre-wrap; }
+  pre .k { color:#7dd3fc; } pre .w { color:#fbbf24; } pre .g { color:#6ee7b7; } pre .m { color:#94a3b8; }
+  ul { list-style:none; padding:0; margin:0; font-size:17.5px; line-height:1.65; }
+  li::before { content:"✓  "; color:#86efac; font-weight:700; }
+  .shot { position:absolute; right:40px; top:92px; width:560px; border-radius:14px; overflow:hidden; box-shadow:0 30px 70px rgba(0,0,0,.55); background:#0a0b10; border:1px solid rgba(255,255,255,.12); z-index:1; }
+  .shot img { width:1100px; margin-left:-540px; display:block; }
+</style></head><body>
+  <div class="left">
+    <span class="badge">Python · FastAPI · BM25F search · Claude tool use · Shopify GraphQL</span>
+    <h1>Shopify AI Shopping Assistant</h1>
+    <p class="tag">Engineered product search, offline intent router, grounded answers</p>
+    <pre><span class="m"># scripts/benchmark.py · 58 queries · 120 products · 527 labels</span>
+<span class="k">search nDCG@5</span>   legacy 0.589 <span class="g">→ BM25F+synonyms+typos+filters 0.914</span>
+<span class="k">zero results</span>    12.1% <span class="g">→ 0.0%</span>      <span class="k">MRR</span> 0.813 <span class="g">→ 1.000</span>
+<span class="k">intent router</span>   dev 100% · <span class="w">held-out 86.7%</span> (30 unseen turns)
+<span class="k">grounding</span>       0 violations · detector recall 94%, 0% false pos.
+<span class="k">latency p50</span>     router 2.4 ms · search 2.2 ms · full turn 3.7 ms</pre>
+    <ul>
+      <li>Typos, synonyms, Bulgarian and "under €200, size M" filters</li>
+      <li>Every price and stock number checked against tool results</li>
+      <li>Order tracking, handoff tickets, team dashboard</li>
+      <li>90 tests · 88% coverage · CI on Python 3.11–3.13</li>
+    </ul>
+  </div>
+  <div class="shot"><img src="screenshot-search-filters.png" alt=""></div>
+</body></html>

@@ -1,0 +1,23 @@
+# docker compose up --build   ->  http://localhost:8000 (demo mode unless ANTHROPIC_API_KEY is set in .env)
+services:
+  assistant:
+    build: .
+    image: shop-assistant:local
+    ports:
+      - "8000:8000"
+    environment:
+      DEMO_MODE: ${DEMO_MODE:-1}
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - assistant-data:/app/var   # conversations, tickets and tool logs (SQLite)
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+volumes:
+  assistant-data:

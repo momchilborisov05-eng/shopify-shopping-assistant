@@ -1,0 +1,1332 @@
+[
+ {
+  "query": "waterproof jacket",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "waterproof"
+   ]
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 2,
+   "myr-summit-rain-jacket": 2,
+   "kestrel-arc-storm-shell": 2,
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "vidda-corrie-down-jacket": 1,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 1,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 1,
+   "tind-corrie-insulated-jacket": 2,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 2,
+   "fjord-tarn-insulated-jacket": 2,
+   "elk-peak-synthetic-hoody": 1,
+   "elk-storm-softshell-jacket": 1,
+   "hav-scree-softshell-hoody": 1,
+   "hav-arc-softshell-jacket": 1,
+   "stig-tarn-softshell-hoody": 1,
+   "fjord-summit-softshell-jacket": 1,
+   "kestrel-corrie-wind-jacket": 1,
+   "ulv-nord-windbreaker": 1,
+   "ulv-alpine-wind-jacket": 1,
+   "myr-ridge-windbreaker": 1,
+   "norr-trail-wind-jacket": 1
+  }
+ },
+ {
+  "query": "down jacket",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "down_jacket"
+   ],
+   "related": [
+    "synthetic_jacket"
+   ]
+  },
+  "qrels": {
+   "vidda-corrie-down-jacket": 2,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 2,
+   "skarn-arc-down-hoody": 2,
+   "rune-ridge-down-jacket": 2,
+   "tind-corrie-insulated-jacket": 1,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 1,
+   "fjord-tarn-insulated-jacket": 1,
+   "elk-peak-synthetic-hoody": 1
+  }
+ },
+ {
+  "query": "hiking boots",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "hiking_boots"
+   ],
+   "related": [
+    "winter_boots",
+    "approach_shoes"
+   ]
+  },
+  "qrels": {
+   "saga-arc-hiking-boots": 2,
+   "tind-drift-mid-boots": 2,
+   "kestrel-nord-trekking-boots": 2,
+   "stig-corrie-leather-boots": 2,
+   "kestrel-glacier-hiking-boots": 2,
+   "aska-ridge-winter-boots": 1,
+   "halden-nord-snow-boots": 1,
+   "hav-ember-winter-boots": 1,
+   "halden-pine-snow-boots": 1,
+   "stig-nord-winter-boots": 1,
+   "fjord-tarn-approach-shoes": 1,
+   "hav-corrie-approach-shoes": 1,
+   "aska-crest-approach-shoes": 1,
+   "skarn-scree-approach-shoes": 1,
+   "ulv-scree-approach-shoes": 1
+  }
+ },
+ {
+  "query": "trail running shoes",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "trail_shoes"
+   ]
+  },
+  "qrels": {
+   "norr-ridge-trail-running-shoes": 2,
+   "fjord-arc-trail-runners": 2,
+   "ulv-crest-trail-shoes": 2,
+   "stig-ridge-trail-running-shoes": 2,
+   "ulv-drift-trail-runners": 2
+  }
+ },
+ {
+  "query": "daypack",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "daypack"
+   ],
+   "related": [
+    "trekking_pack"
+   ]
+  },
+  "qrels": {
+   "kestrel-peak-daypack-22l": 2,
+   "skarn-ember-daypack-28l": 2,
+   "aska-glacier-hiking-pack-24l": 2,
+   "aska-pine-daypack-22l": 2,
+   "ulv-crest-daypack-28l": 2,
+   "aska-nord-trekking-pack-45l": 1,
+   "vidda-storm-expedition-pack-60l": 1,
+   "elk-drift-backpack-50l": 1,
+   "tind-ridge-trekking-pack-45l": 1,
+   "hav-peak-expedition-pack-60l": 1
+  }
+ },
+ {
+  "query": "2 person tent",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "tent"
+   ],
+   "attrs": [
+    "2p"
+   ]
+  },
+  "qrels": {
+   "hav-crest-tent-1p": 1,
+   "ulv-glacier-tent-2p": 2,
+   "skarn-crest-tent-3p": 1,
+   "myr-corrie-tent-1p": 1,
+   "halden-ember-tent-2p": 2
+  }
+ },
+ {
+  "query": "sleeping bag",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "sleeping_bag"
+   ]
+  },
+  "qrels": {
+   "ulv-scree-sleeping-bag--5c": 2,
+   "saga-arc-sleeping-bag-0c": 2,
+   "norr-summit-down-quilt": 2,
+   "myr-ridge-sleeping-bag--5c": 2,
+   "rune-tarn-sleeping-bag-0c": 2
+  }
+ },
+ {
+  "query": "headlamp",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "headlamp"
+   ]
+  },
+  "qrels": {
+   "rune-glacier-headlamp-300": 2,
+   "tind-crest-headlamp-500": 2,
+   "fjord-trail-head-torch-400": 2,
+   "tind-arc-headlamp-300": 2,
+   "norr-ember-headlamp-500": 2
+  }
+ },
+ {
+  "query": "merino base layer",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "base_layer"
+   ],
+   "attrs": [
+    "merino"
+   ]
+  },
+  "qrels": {
+   "skarn-scree-merino-base-layer-top": 1,
+   "aska-tarn-thermal-top": 2,
+   "kestrel-peak-base-layer-leggings": 2,
+   "norr-ember-merino-base-layer-top": 2,
+   "norr-storm-thermal-top": 1
+  }
+ },
+ {
+  "query": "fleece jacket",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "fleece"
+   ],
+   "related": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ]
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 1,
+   "myr-summit-rain-jacket": 1,
+   "kestrel-arc-storm-shell": 1,
+   "halden-peak-anorak": 1,
+   "ulv-ridge-rain-shell": 1,
+   "vidda-corrie-down-jacket": 1,
+   "vidda-scree-down-parka": 1,
+   "aska-tarn-puffer-jacket": 1,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 1,
+   "tind-corrie-insulated-jacket": 1,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 1,
+   "fjord-tarn-insulated-jacket": 1,
+   "elk-peak-synthetic-hoody": 1,
+   "elk-storm-softshell-jacket": 1,
+   "hav-scree-softshell-hoody": 1,
+   "hav-arc-softshell-jacket": 1,
+   "stig-tarn-softshell-hoody": 1,
+   "fjord-summit-softshell-jacket": 1,
+   "kestrel-corrie-wind-jacket": 1,
+   "ulv-nord-windbreaker": 1,
+   "ulv-alpine-wind-jacket": 1,
+   "myr-ridge-windbreaker": 1,
+   "norr-trail-wind-jacket": 1,
+   "myr-crest-fleece-jacket": 2,
+   "hav-crest-grid-fleece": 2,
+   "hav-pine-fleece-pullover": 2,
+   "kestrel-ridge-fleece-jacket": 2,
+   "kestrel-drift-grid-fleece": 2
+  }
+ },
+ {
+  "query": "trekking poles",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "poles"
+   ]
+  },
+  "qrels": {
+   "hav-corrie-trekking-poles": 2,
+   "kestrel-pine-carbon-poles": 2,
+   "saga-scree-trekking-poles": 2,
+   "bjorn-tarn-carbon-poles": 2,
+   "saga-tarn-trekking-poles": 2
+  }
+ },
+ {
+  "query": "insulated gloves",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "gloves"
+   ],
+   "attrs": [
+    "insulated"
+   ]
+  },
+  "qrels": {
+   "bjorn-trail-insulated-gloves": 1,
+   "elk-ridge-softshell-gloves": 2,
+   "elk-summit-mittens": 2,
+   "bjorn-drift-insulated-gloves": 1,
+   "hav-summit-softshell-gloves": 1
+  }
+ },
+ {
+  "query": "winter boots",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "winter_boots"
+   ],
+   "related": [
+    "hiking_boots"
+   ]
+  },
+  "qrels": {
+   "saga-arc-hiking-boots": 1,
+   "tind-drift-mid-boots": 1,
+   "kestrel-nord-trekking-boots": 1,
+   "stig-corrie-leather-boots": 1,
+   "kestrel-glacier-hiking-boots": 1,
+   "aska-ridge-winter-boots": 2,
+   "halden-nord-snow-boots": 2,
+   "hav-ember-winter-boots": 2,
+   "halden-pine-snow-boots": 2,
+   "stig-nord-winter-boots": 2
+  }
+ },
+ {
+  "query": "camping stove",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "stove"
+   ]
+  },
+  "qrels": {
+   "hav-glacier-gas-stove": 2,
+   "myr-crest-camp-stove": 2,
+   "aska-peak-gas-stove": 2,
+   "kestrel-drift-camp-stove": 2,
+   "ulv-summit-gas-stove": 2
+  }
+ },
+ {
+  "query": "windproof jacket",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "windproof"
+   ]
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 2,
+   "myr-summit-rain-jacket": 2,
+   "kestrel-arc-storm-shell": 2,
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "vidda-corrie-down-jacket": 1,
+   "vidda-scree-down-parka": 1,
+   "aska-tarn-puffer-jacket": 1,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 1,
+   "tind-corrie-insulated-jacket": 1,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 1,
+   "fjord-tarn-insulated-jacket": 1,
+   "elk-peak-synthetic-hoody": 1,
+   "elk-storm-softshell-jacket": 2,
+   "hav-scree-softshell-hoody": 2,
+   "hav-arc-softshell-jacket": 2,
+   "stig-tarn-softshell-hoody": 2,
+   "fjord-summit-softshell-jacket": 2,
+   "kestrel-corrie-wind-jacket": 2,
+   "ulv-nord-windbreaker": 2,
+   "ulv-alpine-wind-jacket": 2,
+   "myr-ridge-windbreaker": 2,
+   "norr-trail-wind-jacket": 2
+  }
+ },
+ {
+  "query": "lightweight backpack",
+  "group": "plain",
+  "spec": {
+   "types": [
+    "daypack",
+    "trekking_pack",
+    "running_vest"
+   ],
+   "attrs": [
+    "lightweight"
+   ]
+  },
+  "qrels": {
+   "kestrel-peak-daypack-22l": 1,
+   "skarn-ember-daypack-28l": 2,
+   "aska-glacier-hiking-pack-24l": 2,
+   "aska-pine-daypack-22l": 1,
+   "ulv-crest-daypack-28l": 1,
+   "aska-nord-trekking-pack-45l": 2,
+   "vidda-storm-expedition-pack-60l": 1,
+   "elk-drift-backpack-50l": 2,
+   "tind-ridge-trekking-pack-45l": 1,
+   "hav-peak-expedition-pack-60l": 1,
+   "vidda-ridge-running-vest-8l": 2,
+   "fjord-summit-race-vest-5l": 2,
+   "saga-glacier-running-vest-8l": 2,
+   "elk-corrie-race-vest-5l": 2,
+   "skarn-nord-running-vest-8l": 2
+  }
+ },
+ {
+  "query": "rain coat",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "rain_jacket"
+   ],
+   "related": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "waterproof"
+   ]
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 2,
+   "myr-summit-rain-jacket": 2,
+   "kestrel-arc-storm-shell": 2,
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "vidda-scree-down-parka": 1,
+   "tind-corrie-insulated-jacket": 1,
+   "hav-scree-thermal-jacket": 1,
+   "fjord-tarn-insulated-jacket": 1
+  }
+ },
+ {
+  "query": "puffer",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "down_jacket"
+   ],
+   "related": [
+    "synthetic_jacket"
+   ]
+  },
+  "qrels": {
+   "vidda-corrie-down-jacket": 2,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 2,
+   "skarn-arc-down-hoody": 2,
+   "rune-ridge-down-jacket": 2,
+   "tind-corrie-insulated-jacket": 1,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 1,
+   "fjord-tarn-insulated-jacket": 1,
+   "elk-peak-synthetic-hoody": 1
+  }
+ },
+ {
+  "query": "rucksack for day hikes",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "daypack"
+   ],
+   "related": [
+    "trekking_pack"
+   ]
+  },
+  "qrels": {
+   "kestrel-peak-daypack-22l": 2,
+   "skarn-ember-daypack-28l": 2,
+   "aska-glacier-hiking-pack-24l": 2,
+   "aska-pine-daypack-22l": 2,
+   "ulv-crest-daypack-28l": 2,
+   "aska-nord-trekking-pack-45l": 1,
+   "vidda-storm-expedition-pack-60l": 1,
+   "elk-drift-backpack-50l": 1,
+   "tind-ridge-trekking-pack-45l": 1,
+   "hav-peak-expedition-pack-60l": 1
+  }
+ },
+ {
+  "query": "head torch",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "headlamp"
+   ]
+  },
+  "qrels": {
+   "rune-glacier-headlamp-300": 2,
+   "tind-crest-headlamp-500": 2,
+   "fjord-trail-head-torch-400": 2,
+   "tind-arc-headlamp-300": 2,
+   "norr-ember-headlamp-500": 2
+  }
+ },
+ {
+  "query": "trainers for trail running",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "trail_shoes"
+   ]
+  },
+  "qrels": {
+   "norr-ridge-trail-running-shoes": 2,
+   "fjord-arc-trail-runners": 2,
+   "ulv-crest-trail-shoes": 2,
+   "stig-ridge-trail-running-shoes": 2,
+   "ulv-drift-trail-runners": 2
+  }
+ },
+ {
+  "query": "thermal top",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "base_layer"
+   ]
+  },
+  "qrels": {
+   "skarn-scree-merino-base-layer-top": 2,
+   "aska-tarn-thermal-top": 2,
+   "kestrel-peak-base-layer-leggings": 2,
+   "norr-ember-merino-base-layer-top": 2,
+   "norr-storm-thermal-top": 2
+  }
+ },
+ {
+  "query": "flask",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "bottle"
+   ]
+  },
+  "qrels": {
+   "lynx-ember-thermo-bottle-075l": 2,
+   "vidda-nord-insulated-flask-1l": 2,
+   "stig-pine-water-bottle-1l": 2,
+   "fjord-glacier-thermo-bottle-075l": 2,
+   "vidda-scree-insulated-flask-1l": 2
+  }
+ },
+ {
+  "query": "mittens",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "gloves"
+   ]
+  },
+  "qrels": {
+   "bjorn-trail-insulated-gloves": 2,
+   "elk-ridge-softshell-gloves": 2,
+   "elk-summit-mittens": 2,
+   "bjorn-drift-insulated-gloves": 2,
+   "hav-summit-softshell-gloves": 2
+  }
+ },
+ {
+  "query": "trousers for hiking",
+  "group": "synonym",
+  "spec": {
+   "types": [
+    "hiking_pants"
+   ]
+  },
+  "qrels": {
+   "hav-crest-hiking-pants": 2,
+   "rune-tarn-trekking-trousers": 2,
+   "kestrel-ridge-convertible-pants": 2,
+   "stig-ridge-hiking-pants": 2,
+   "stig-alpine-trekking-trousers": 2
+  }
+ },
+ {
+  "query": "waterprof jaket",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "waterproof"
+   ]
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 2,
+   "myr-summit-rain-jacket": 2,
+   "kestrel-arc-storm-shell": 2,
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "vidda-corrie-down-jacket": 1,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 1,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 1,
+   "tind-corrie-insulated-jacket": 2,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 2,
+   "fjord-tarn-insulated-jacket": 2,
+   "elk-peak-synthetic-hoody": 1,
+   "elk-storm-softshell-jacket": 1,
+   "hav-scree-softshell-hoody": 1,
+   "hav-arc-softshell-jacket": 1,
+   "stig-tarn-softshell-hoody": 1,
+   "fjord-summit-softshell-jacket": 1,
+   "kestrel-corrie-wind-jacket": 1,
+   "ulv-nord-windbreaker": 1,
+   "ulv-alpine-wind-jacket": 1,
+   "myr-ridge-windbreaker": 1,
+   "norr-trail-wind-jacket": 1
+  }
+ },
+ {
+  "query": "hikng boots",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "hiking_boots"
+   ],
+   "related": [
+    "winter_boots",
+    "approach_shoes"
+   ]
+  },
+  "qrels": {
+   "saga-arc-hiking-boots": 2,
+   "tind-drift-mid-boots": 2,
+   "kestrel-nord-trekking-boots": 2,
+   "stig-corrie-leather-boots": 2,
+   "kestrel-glacier-hiking-boots": 2,
+   "aska-ridge-winter-boots": 1,
+   "halden-nord-snow-boots": 1,
+   "hav-ember-winter-boots": 1,
+   "halden-pine-snow-boots": 1,
+   "stig-nord-winter-boots": 1,
+   "fjord-tarn-approach-shoes": 1,
+   "hav-corrie-approach-shoes": 1,
+   "aska-crest-approach-shoes": 1,
+   "skarn-scree-approach-shoes": 1,
+   "ulv-scree-approach-shoes": 1
+  }
+ },
+ {
+  "query": "sleping bag",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "sleeping_bag"
+   ]
+  },
+  "qrels": {
+   "ulv-scree-sleeping-bag--5c": 2,
+   "saga-arc-sleeping-bag-0c": 2,
+   "norr-summit-down-quilt": 2,
+   "myr-ridge-sleeping-bag--5c": 2,
+   "rune-tarn-sleeping-bag-0c": 2
+  }
+ },
+ {
+  "query": "headlmap",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "headlamp"
+   ]
+  },
+  "qrels": {
+   "rune-glacier-headlamp-300": 2,
+   "tind-crest-headlamp-500": 2,
+   "fjord-trail-head-torch-400": 2,
+   "tind-arc-headlamp-300": 2,
+   "norr-ember-headlamp-500": 2
+  }
+ },
+ {
+  "query": "backpak",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "daypack",
+    "trekking_pack",
+    "running_vest"
+   ]
+  },
+  "qrels": {
+   "kestrel-peak-daypack-22l": 2,
+   "skarn-ember-daypack-28l": 2,
+   "aska-glacier-hiking-pack-24l": 2,
+   "aska-pine-daypack-22l": 2,
+   "ulv-crest-daypack-28l": 2,
+   "aska-nord-trekking-pack-45l": 2,
+   "vidda-storm-expedition-pack-60l": 2,
+   "elk-drift-backpack-50l": 2,
+   "tind-ridge-trekking-pack-45l": 2,
+   "hav-peak-expedition-pack-60l": 2,
+   "vidda-ridge-running-vest-8l": 2,
+   "fjord-summit-race-vest-5l": 2,
+   "saga-glacier-running-vest-8l": 2,
+   "elk-corrie-race-vest-5l": 2,
+   "skarn-nord-running-vest-8l": 2
+  }
+ },
+ {
+  "query": "fleese",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "fleece"
+   ]
+  },
+  "qrels": {
+   "myr-crest-fleece-jacket": 2,
+   "hav-crest-grid-fleece": 2,
+   "hav-pine-fleece-pullover": 2,
+   "kestrel-ridge-fleece-jacket": 2,
+   "kestrel-drift-grid-fleece": 2
+  }
+ },
+ {
+  "query": "trekking polls",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "poles"
+   ]
+  },
+  "qrels": {
+   "hav-corrie-trekking-poles": 2,
+   "kestrel-pine-carbon-poles": 2,
+   "saga-scree-trekking-poles": 2,
+   "bjorn-tarn-carbon-poles": 2,
+   "saga-tarn-trekking-poles": 2
+  }
+ },
+ {
+  "query": "tnet",
+  "group": "typo",
+  "spec": {
+   "types": [
+    "tent"
+   ]
+  },
+  "qrels": {
+   "hav-crest-tent-1p": 2,
+   "ulv-glacier-tent-2p": 2,
+   "skarn-crest-tent-3p": 2,
+   "myr-corrie-tent-1p": 2,
+   "halden-ember-tent-2p": 2
+  }
+ },
+ {
+  "query": "водоустойчиво яке",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "waterproof"
+   ]
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 2,
+   "myr-summit-rain-jacket": 2,
+   "kestrel-arc-storm-shell": 2,
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "vidda-corrie-down-jacket": 1,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 1,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 1,
+   "tind-corrie-insulated-jacket": 2,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 2,
+   "fjord-tarn-insulated-jacket": 2,
+   "elk-peak-synthetic-hoody": 1,
+   "elk-storm-softshell-jacket": 1,
+   "hav-scree-softshell-hoody": 1,
+   "hav-arc-softshell-jacket": 1,
+   "stig-tarn-softshell-hoody": 1,
+   "fjord-summit-softshell-jacket": 1,
+   "kestrel-corrie-wind-jacket": 1,
+   "ulv-nord-windbreaker": 1,
+   "ulv-alpine-wind-jacket": 1,
+   "myr-ridge-windbreaker": 1,
+   "norr-trail-wind-jacket": 1
+  }
+ },
+ {
+  "query": "туристически обувки",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "hiking_boots"
+   ],
+   "related": [
+    "trail_shoes",
+    "approach_shoes"
+   ]
+  },
+  "qrels": {
+   "saga-arc-hiking-boots": 2,
+   "tind-drift-mid-boots": 2,
+   "kestrel-nord-trekking-boots": 2,
+   "stig-corrie-leather-boots": 2,
+   "kestrel-glacier-hiking-boots": 2,
+   "norr-ridge-trail-running-shoes": 1,
+   "fjord-arc-trail-runners": 1,
+   "ulv-crest-trail-shoes": 1,
+   "stig-ridge-trail-running-shoes": 1,
+   "ulv-drift-trail-runners": 1,
+   "fjord-tarn-approach-shoes": 1,
+   "hav-corrie-approach-shoes": 1,
+   "aska-crest-approach-shoes": 1,
+   "skarn-scree-approach-shoes": 1,
+   "ulv-scree-approach-shoes": 1
+  }
+ },
+ {
+  "query": "раница",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "daypack",
+    "trekking_pack",
+    "running_vest"
+   ]
+  },
+  "qrels": {
+   "kestrel-peak-daypack-22l": 2,
+   "skarn-ember-daypack-28l": 2,
+   "aska-glacier-hiking-pack-24l": 2,
+   "aska-pine-daypack-22l": 2,
+   "ulv-crest-daypack-28l": 2,
+   "aska-nord-trekking-pack-45l": 2,
+   "vidda-storm-expedition-pack-60l": 2,
+   "elk-drift-backpack-50l": 2,
+   "tind-ridge-trekking-pack-45l": 2,
+   "hav-peak-expedition-pack-60l": 2,
+   "vidda-ridge-running-vest-8l": 2,
+   "fjord-summit-race-vest-5l": 2,
+   "saga-glacier-running-vest-8l": 2,
+   "elk-corrie-race-vest-5l": 2,
+   "skarn-nord-running-vest-8l": 2
+  }
+ },
+ {
+  "query": "палатка",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "tent"
+   ]
+  },
+  "qrels": {
+   "hav-crest-tent-1p": 2,
+   "ulv-glacier-tent-2p": 2,
+   "skarn-crest-tent-3p": 2,
+   "myr-corrie-tent-1p": 2,
+   "halden-ember-tent-2p": 2
+  }
+ },
+ {
+  "query": "спален чувал",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "sleeping_bag"
+   ]
+  },
+  "qrels": {
+   "ulv-scree-sleeping-bag--5c": 2,
+   "saga-arc-sleeping-bag-0c": 2,
+   "norr-summit-down-quilt": 2,
+   "myr-ridge-sleeping-bag--5c": 2,
+   "rune-tarn-sleeping-bag-0c": 2
+  }
+ },
+ {
+  "query": "челник",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "headlamp"
+   ]
+  },
+  "qrels": {
+   "rune-glacier-headlamp-300": 2,
+   "tind-crest-headlamp-500": 2,
+   "fjord-trail-head-torch-400": 2,
+   "tind-arc-headlamp-300": 2,
+   "norr-ember-headlamp-500": 2
+  }
+ },
+ {
+  "query": "ръкавици",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "gloves"
+   ]
+  },
+  "qrels": {
+   "bjorn-trail-insulated-gloves": 2,
+   "elk-ridge-softshell-gloves": 2,
+   "elk-summit-mittens": 2,
+   "bjorn-drift-insulated-gloves": 2,
+   "hav-summit-softshell-gloves": 2
+  }
+ },
+ {
+  "query": "пухено яке",
+  "group": "bulgarian",
+  "spec": {
+   "types": [
+    "down_jacket"
+   ],
+   "related": [
+    "synthetic_jacket"
+   ]
+  },
+  "qrels": {
+   "vidda-corrie-down-jacket": 2,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 2,
+   "skarn-arc-down-hoody": 2,
+   "rune-ridge-down-jacket": 2,
+   "tind-corrie-insulated-jacket": 1,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 1,
+   "fjord-tarn-insulated-jacket": 1,
+   "elk-peak-synthetic-hoody": 1
+  }
+ },
+ {
+  "query": "waterproof jacket size M",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "waterproof"
+   ],
+   "size": "M"
+  },
+  "qrels": {
+   "aska-nord-rain-shell": 2,
+   "myr-summit-rain-jacket": 2,
+   "kestrel-arc-storm-shell": 2,
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "vidda-corrie-down-jacket": 1,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 1,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 1,
+   "tind-corrie-insulated-jacket": 2,
+   "fjord-drift-synthetic-hoody": 1,
+   "hav-scree-thermal-jacket": 2,
+   "fjord-tarn-insulated-jacket": 2,
+   "elk-peak-synthetic-hoody": 1,
+   "elk-storm-softshell-jacket": 1,
+   "hav-scree-softshell-hoody": 1,
+   "hav-arc-softshell-jacket": 1,
+   "stig-tarn-softshell-hoody": 1,
+   "fjord-summit-softshell-jacket": 1,
+   "kestrel-corrie-wind-jacket": 1,
+   "ulv-nord-windbreaker": 1,
+   "ulv-alpine-wind-jacket": 1,
+   "myr-ridge-windbreaker": 1,
+   "norr-trail-wind-jacket": 1
+  }
+ },
+ {
+  "query": "hiking boots size 43",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "hiking_boots"
+   ],
+   "related": [
+    "winter_boots",
+    "approach_shoes"
+   ],
+   "size": "EU 43"
+  },
+  "qrels": {
+   "saga-arc-hiking-boots": 2,
+   "tind-drift-mid-boots": 2,
+   "kestrel-nord-trekking-boots": 2,
+   "stig-corrie-leather-boots": 2,
+   "kestrel-glacier-hiking-boots": 2,
+   "aska-ridge-winter-boots": 1,
+   "halden-nord-snow-boots": 1,
+   "hav-ember-winter-boots": 1,
+   "halden-pine-snow-boots": 1,
+   "fjord-tarn-approach-shoes": 1,
+   "hav-corrie-approach-shoes": 1,
+   "aska-crest-approach-shoes": 1,
+   "skarn-scree-approach-shoes": 1,
+   "ulv-scree-approach-shoes": 1
+  }
+ },
+ {
+  "query": "blue backpack",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "daypack",
+    "trekking_pack",
+    "running_vest"
+   ],
+   "colour": "blue"
+  },
+  "qrels": {
+   "skarn-ember-daypack-28l": 2,
+   "aska-pine-daypack-22l": 2,
+   "elk-drift-backpack-50l": 2,
+   "hav-peak-expedition-pack-60l": 2,
+   "fjord-summit-race-vest-5l": 2,
+   "elk-corrie-race-vest-5l": 2,
+   "skarn-nord-running-vest-8l": 2
+  }
+ },
+ {
+  "query": "down jacket under 200",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "down_jacket"
+   ],
+   "related": [
+    "synthetic_jacket"
+   ],
+   "max_price": 200
+  },
+  "qrels": {
+   "rune-ridge-down-jacket": 2,
+   "hav-scree-thermal-jacket": 1,
+   "elk-peak-synthetic-hoody": 1
+  }
+ },
+ {
+  "query": "tent under €300",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "tent"
+   ],
+   "max_price": 300
+  },
+  "qrels": {
+   "hav-crest-tent-1p": 2,
+   "skarn-crest-tent-3p": 2,
+   "myr-corrie-tent-1p": 2,
+   "halden-ember-tent-2p": 2
+  }
+ },
+ {
+  "query": "trail shoes size 38 under 120",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "trail_shoes"
+   ],
+   "size": "EU 38",
+   "max_price": 120
+  },
+  "qrels": {
+   "ulv-crest-trail-shoes": 2
+  }
+ },
+ {
+  "query": "red fleece in L",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "fleece"
+   ],
+   "size": "L",
+   "colour": "red"
+  },
+  "qrels": {
+   "myr-crest-fleece-jacket": 2,
+   "hav-pine-fleece-pullover": 2,
+   "kestrel-ridge-fleece-jacket": 2
+  }
+ },
+ {
+  "query": "black beanie",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "beanie"
+   ],
+   "colour": "black"
+  },
+  "qrels": {
+   "hav-arc-fleece-hat": 2
+  }
+ },
+ {
+  "query": "jacket between 100 and 200",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "min_price": 100,
+   "max_price": 200
+  },
+  "qrels": {
+   "halden-peak-anorak": 2,
+   "ulv-ridge-rain-shell": 2,
+   "rune-ridge-down-jacket": 2,
+   "hav-scree-thermal-jacket": 2,
+   "elk-peak-synthetic-hoody": 2,
+   "elk-storm-softshell-jacket": 2,
+   "hav-scree-softshell-hoody": 2,
+   "hav-arc-softshell-jacket": 2,
+   "stig-tarn-softshell-hoody": 2,
+   "fjord-summit-softshell-jacket": 2,
+   "kestrel-corrie-wind-jacket": 2,
+   "ulv-nord-windbreaker": 2,
+   "norr-trail-wind-jacket": 2
+  }
+ },
+ {
+  "query": "яке размер L под 150",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "size": "L",
+   "max_price": 150
+  },
+  "qrels": {
+   "myr-summit-rain-jacket": 2,
+   "ulv-ridge-rain-shell": 2,
+   "elk-storm-softshell-jacket": 2,
+   "hav-scree-softshell-hoody": 2,
+   "kestrel-corrie-wind-jacket": 2,
+   "ulv-nord-windbreaker": 2,
+   "myr-ridge-windbreaker": 2,
+   "norr-trail-wind-jacket": 2
+  }
+ },
+ {
+  "query": "red jacket",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "colour": "red"
+  },
+  "qrels": {
+   "halden-peak-anorak": 2,
+   "aska-tarn-puffer-jacket": 2,
+   "rune-ridge-down-jacket": 2,
+   "hav-scree-thermal-jacket": 2,
+   "kestrel-corrie-wind-jacket": 2,
+   "myr-ridge-windbreaker": 2
+  }
+ },
+ {
+  "query": "winter boots 44 in stock",
+  "group": "filters",
+  "spec": {
+   "types": [
+    "winter_boots"
+   ],
+   "size": "EU 44",
+   "in_stock": true
+  },
+  "qrels": {
+   "aska-ridge-winter-boots": 2
+  }
+ },
+ {
+  "query": "lightweight tent",
+  "group": "mixed",
+  "spec": {
+   "types": [
+    "tent"
+   ],
+   "attrs": [
+    "lightweight"
+   ]
+  },
+  "qrels": {
+   "hav-crest-tent-1p": 2,
+   "ulv-glacier-tent-2p": 1,
+   "skarn-crest-tent-3p": 1,
+   "myr-corrie-tent-1p": 1,
+   "halden-ember-tent-2p": 1
+  }
+ },
+ {
+  "query": "warm jacket for winter",
+  "group": "mixed",
+  "spec": {
+   "types": [
+    "down_jacket",
+    "synthetic_jacket"
+   ],
+   "related": [
+    "rain_jacket",
+    "down_jacket",
+    "synthetic_jacket",
+    "softshell",
+    "windbreaker"
+   ],
+   "attrs": [
+    "insulated"
+   ]
+  },
+  "qrels": {
+   "vidda-corrie-down-jacket": 2,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 2,
+   "skarn-arc-down-hoody": 2,
+   "rune-ridge-down-jacket": 2,
+   "tind-corrie-insulated-jacket": 2,
+   "fjord-drift-synthetic-hoody": 2,
+   "hav-scree-thermal-jacket": 2,
+   "fjord-tarn-insulated-jacket": 2,
+   "elk-peak-synthetic-hoody": 2
+  }
+ },
+ {
+  "query": "packable down jacket",
+  "group": "mixed",
+  "spec": {
+   "types": [
+    "down_jacket"
+   ],
+   "attrs": [
+    "packable"
+   ]
+  },
+  "qrels": {
+   "vidda-corrie-down-jacket": 2,
+   "vidda-scree-down-parka": 2,
+   "aska-tarn-puffer-jacket": 2,
+   "skarn-arc-down-hoody": 1,
+   "rune-ridge-down-jacket": 2
+  }
+ },
+ {
+  "query": "ultralight running vest",
+  "group": "mixed",
+  "spec": {
+   "types": [
+    "running_vest"
+   ],
+   "attrs": [
+    "lightweight"
+   ]
+  },
+  "qrels": {
+   "vidda-ridge-running-vest-8l": 2,
+   "fjord-summit-race-vest-5l": 2,
+   "saga-glacier-running-vest-8l": 2,
+   "elk-corrie-race-vest-5l": 2,
+   "skarn-nord-running-vest-8l": 2
+  }
+ },
+ {
+  "query": "waterproof hiking boots",
+  "group": "mixed",
+  "spec": {
+   "types": [
+    "hiking_boots"
+   ],
+   "related": [
+    "winter_boots",
+    "trail_shoes"
+   ],
+   "attrs": [
+    "waterproof"
+   ]
+  },
+  "qrels": {
+   "saga-arc-hiking-boots": 1,
+   "tind-drift-mid-boots": 1,
+   "kestrel-nord-trekking-boots": 1,
+   "stig-corrie-leather-boots": 2,
+   "kestrel-glacier-hiking-boots": 2,
+   "ulv-crest-trail-shoes": 1,
+   "ulv-drift-trail-runners": 1,
+   "aska-ridge-winter-boots": 1,
+   "halden-nord-snow-boots": 1,
+   "hav-ember-winter-boots": 1,
+   "halden-pine-snow-boots": 1,
+   "stig-nord-winter-boots": 1
+  }
+ }
+]

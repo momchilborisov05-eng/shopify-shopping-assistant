@@ -1,0 +1,621 @@
+{
+ "generated": "2026-11-20",
+ "machine": "Windows AMD64, Python 3.12.3",
+ "quick": false,
+ "seconds": 13.7,
+ "data": {
+  "search_catalog_products": 120,
+  "search_queries": 58,
+  "relevance_labels": 527,
+  "dev_conversations": 67,
+  "holdout_conversations": 28
+ },
+ "search": {
+  "legacy keyword scorer (before)": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.589,
+    "recall@5": 0.566,
+    "mrr": 0.813,
+    "precision_of_shown@5": 0.812,
+    "zero_result_rate": 0.121
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.765,
+     "recall@5": 0.738,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.912,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.627,
+     "recall@5": 0.533,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.889,
+     "zero_result_rate": 0.0
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.232,
+     "recall@5": 0.275,
+     "mrr": 0.375,
+     "precision_of_shown@5": 0.8,
+     "zero_result_rate": 0.625
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.366,
+     "recall@5": 0.375,
+     "mrr": 0.643,
+     "precision_of_shown@5": 0.75,
+     "zero_result_rate": 0.25
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.608,
+     "recall@5": 0.617,
+     "mrr": 0.75,
+     "precision_of_shown@5": 0.65,
+     "zero_result_rate": 0.0
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.835,
+     "recall@5": 0.72,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.82,
+     "zero_result_rate": 0.0
+    }
+   }
+  },
+  "BM25F only": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.57,
+    "recall@5": 0.558,
+    "mrr": 0.68,
+    "precision_of_shown@5": 0.772,
+    "zero_result_rate": 0.241
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.909,
+     "recall@5": 0.9,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.925,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.606,
+     "recall@5": 0.489,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.839,
+     "zero_result_rate": 0.0
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.284,
+     "recall@5": 0.3,
+     "mrr": 0.312,
+     "precision_of_shown@5": 0.867,
+     "zero_result_rate": 0.625
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.0,
+     "recall@5": 0.0,
+     "mrr": 0.0,
+     "precision_of_shown@5": null,
+     "zero_result_rate": 1.0
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.546,
+     "recall@5": 0.596,
+     "mrr": 0.58,
+     "precision_of_shown@5": 0.455,
+     "zero_result_rate": 0.083
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.847,
+     "recall@5": 0.8,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.8,
+     "zero_result_rate": 0.0
+    }
+   }
+  },
+  "+ coverage cut": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.429,
+    "recall@5": 0.392,
+    "mrr": 0.56,
+    "precision_of_shown@5": 0.915,
+    "zero_result_rate": 0.431
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.872,
+     "recall@5": 0.85,
+     "mrr": 1.0,
+     "precision_of_shown@5": 1.0,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.432,
+     "recall@5": 0.311,
+     "mrr": 0.889,
+     "precision_of_shown@5": 0.975,
+     "zero_result_rate": 0.111
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.0,
+     "recall@5": 0.0,
+     "mrr": 0.0,
+     "precision_of_shown@5": null,
+     "zero_result_rate": 1.0
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.0,
+     "recall@5": 0.0,
+     "mrr": 0.0,
+     "precision_of_shown@5": null,
+     "zero_result_rate": 1.0
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.269,
+     "recall@5": 0.261,
+     "mrr": 0.292,
+     "precision_of_shown@5": 0.6,
+     "zero_result_rate": 0.667
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.768,
+     "recall@5": 0.64,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.8,
+     "zero_result_rate": 0.0
+    }
+   }
+  },
+  "+ synonyms & BG translations": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.633,
+    "recall@5": 0.63,
+    "mrr": 0.699,
+    "precision_of_shown@5": 0.927,
+    "zero_result_rate": 0.276
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.92,
+     "recall@5": 0.912,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.988,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.878,
+     "recall@5": 0.867,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.928,
+     "zero_result_rate": 0.0
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.0,
+     "recall@5": 0.0,
+     "mrr": 0.0,
+     "precision_of_shown@5": null,
+     "zero_result_rate": 1.0
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.882,
+     "recall@5": 0.9,
+     "mrr": 1.0,
+     "precision_of_shown@5": 1.0,
+     "zero_result_rate": 0.0
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.229,
+     "recall@5": 0.278,
+     "mrr": 0.211,
+     "precision_of_shown@5": 0.6,
+     "zero_result_rate": 0.667
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.853,
+     "recall@5": 0.72,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.88,
+     "zero_result_rate": 0.0
+    }
+   }
+  },
+  "+ typo tolerance": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.761,
+    "recall@5": 0.754,
+    "mrr": 0.837,
+    "precision_of_shown@5": 0.935,
+    "zero_result_rate": 0.138
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.92,
+     "recall@5": 0.912,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.988,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.878,
+     "recall@5": 0.867,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.928,
+     "zero_result_rate": 0.0
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.933,
+     "recall@5": 0.9,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.975,
+     "zero_result_rate": 0.0
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.882,
+     "recall@5": 0.9,
+     "mrr": 1.0,
+     "precision_of_shown@5": 1.0,
+     "zero_result_rate": 0.0
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.229,
+     "recall@5": 0.278,
+     "mrr": 0.211,
+     "precision_of_shown@5": 0.6,
+     "zero_result_rate": 0.667
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.853,
+     "recall@5": 0.72,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.88,
+     "zero_result_rate": 0.0
+    }
+   }
+  },
+  "+ parsed filters (full)": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.914,
+    "recall@5": 0.891,
+    "mrr": 1.0,
+    "precision_of_shown@5": 0.965,
+    "zero_result_rate": 0.0
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.92,
+     "recall@5": 0.912,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.988,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.878,
+     "recall@5": 0.867,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.928,
+     "zero_result_rate": 0.0
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.933,
+     "recall@5": 0.9,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.975,
+     "zero_result_rate": 0.0
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.882,
+     "recall@5": 0.9,
+     "mrr": 1.0,
+     "precision_of_shown@5": 1.0,
+     "zero_result_rate": 0.0
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.968,
+     "recall@5": 0.939,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.967,
+     "zero_result_rate": 0.0
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.853,
+     "recall@5": 0.72,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.88,
+     "zero_result_rate": 0.0
+    }
+   }
+  },
+  "full, without the coverage cut": {
+   "all": {
+    "queries": 58,
+    "ndcg@5": 0.939,
+    "recall@5": 0.943,
+    "mrr": 1.0,
+    "precision_of_shown@5": 0.928,
+    "zero_result_rate": 0.0
+   },
+   "groups": {
+    "plain": {
+     "queries": 16,
+     "ndcg@5": 0.953,
+     "recall@5": 0.975,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.975,
+     "zero_result_rate": 0.0
+    },
+    "synonym": {
+     "queries": 9,
+     "ndcg@5": 0.892,
+     "recall@5": 0.889,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.906,
+     "zero_result_rate": 0.0
+    },
+    "typo": {
+     "queries": 8,
+     "ndcg@5": 0.949,
+     "recall@5": 0.925,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.925,
+     "zero_result_rate": 0.0
+    },
+    "bulgarian": {
+     "queries": 8,
+     "ndcg@5": 0.917,
+     "recall@5": 1.0,
+     "mrr": 1.0,
+     "precision_of_shown@5": 1.0,
+     "zero_result_rate": 0.0
+    },
+    "filters": {
+     "queries": 12,
+     "ndcg@5": 0.968,
+     "recall@5": 0.939,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.854,
+     "zero_result_rate": 0.0
+    },
+    "mixed": {
+     "queries": 5,
+     "ndcg@5": 0.932,
+     "recall@5": 0.88,
+     "mrr": 1.0,
+     "precision_of_shown@5": 0.88,
+     "zero_result_rate": 0.0
+    }
+   }
+  }
+ },
+ "router_single_turn": {
+  "dev": {
+   "turns": 57,
+   "intent_accuracy": 1.0
+  },
+  "holdout": {
+   "turns": 26,
+   "intent_accuracy": 0.885
+  }
+ },
+ "conversations": {
+  "dev": {
+   "conversations": 67,
+   "turns": 78,
+   "intent_accuracy": 1.0,
+   "per_intent": {
+    "product_search": {
+     "turns": 26,
+     "accuracy": 1.0
+    },
+    "product_info": {
+     "turns": 11,
+     "accuracy": 1.0
+    },
+    "policy": {
+     "turns": 11,
+     "accuracy": 1.0
+    },
+    "order_status": {
+     "turns": 10,
+     "accuracy": 1.0
+    },
+    "handoff": {
+     "turns": 11,
+     "accuracy": 1.0
+    },
+    "greeting": {
+     "turns": 3,
+     "accuracy": 1.0
+    },
+    "out_of_scope": {
+     "turns": 6,
+     "accuracy": 1.0
+    }
+   },
+   "tool_choice_accuracy": 1.0,
+   "tool_call_exact_match": 1.0,
+   "answer_checks_passed": "57/57",
+   "answer_check_rate": 1.0,
+   "handoff": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "expected": 8,
+    "opened": 8,
+    "priority_accuracy": 1.0
+   },
+   "grounding": {
+    "numbers_checked": 232,
+    "violations_in_final_answers": 0
+   },
+   "failures": []
+  },
+  "holdout": {
+   "conversations": 28,
+   "turns": 30,
+   "intent_accuracy": 0.867,
+   "per_intent": {
+    "product_search": {
+     "turns": 9,
+     "accuracy": 1.0
+    },
+    "product_info": {
+     "turns": 4,
+     "accuracy": 0.75
+    },
+    "policy": {
+     "turns": 5,
+     "accuracy": 1.0
+    },
+    "order_status": {
+     "turns": 4,
+     "accuracy": 0.75
+    },
+    "handoff": {
+     "turns": 4,
+     "accuracy": 0.75
+    },
+    "greeting": {
+     "turns": 2,
+     "accuracy": 0.5
+    },
+    "out_of_scope": {
+     "turns": 2,
+     "accuracy": 1.0
+    }
+   },
+   "tool_choice_accuracy": 0.867,
+   "tool_call_exact_match": 0.867,
+   "answer_checks_passed": "9/13",
+   "answer_check_rate": 0.692,
+   "handoff": {
+    "precision": 1.0,
+    "recall": 0.667,
+    "f1": 0.8,
+    "expected": 3,
+    "opened": 2,
+    "priority_accuracy": 1.0
+   },
+   "grounding": {
+    "numbers_checked": 67,
+    "violations_in_final_answers": 0
+   },
+   "failures": [
+    {
+     "conv": "ho11",
+     "user": "is the thermo bottle dishwasher safe?",
+     "expected": "product_info",
+     "got": "product_search",
+     "expected_tool": "get_product",
+     "tool": "search_products"
+    },
+    {
+     "conv": "ho16",
+     "user": "hey, when will my stuff arrive?",
+     "expected": "order_status",
+     "got": "product_search",
+     "expected_tool": null,
+     "tool": "search_products"
+    },
+    {
+     "conv": "ho19",
+     "user": "The zip on my backpack broke after a week, I want my money back. ivan.dimitrov@example.com",
+     "expected": "handoff",
+     "got": "product_search",
+     "expected_tool": "handoff_to_human",
+     "tool": "search_products"
+    },
+    {
+     "conv": "ho23",
+     "user": "Мерси, това е всичко",
+     "expected": "greeting",
+     "got": "product_search",
+     "expected_tool": null,
+     "tool": "search_products"
+    }
+   ]
+  }
+ },
+ "grounding_detector": {
+  "clean_answers": 108,
+  "false_positive_rate": 0.0,
+  "perturbed_answers": 66,
+  "detection_recall": 0.939,
+  "by_kind": {
+   "duration": "15/17",
+   "percent": "1/1",
+   "price": "45/47",
+   "stock": "1/1"
+  }
+ },
+ "latency": {
+  "index_build_120_products_ms": 26.23,
+  "search_120_products": {
+   "n": 1740,
+   "p50_ms": 2.186,
+   "p95_ms": 5.355
+  },
+  "search_demo_store_12_products": {
+   "n": 1740,
+   "p50_ms": 0.467,
+   "p95_ms": 1.156
+  },
+  "router": {
+   "n": 2010,
+   "p50_ms": 2.406,
+   "p95_ms": 5.339
+  },
+  "full_turn_demo_mode": {
+   "n": 108,
+   "p50_ms": 3.709,
+   "p95_ms": 7.157,
+   "note": "router + tool + answer + grounding check + SQLite write, word delay off"
+  }
+ },
+ "claude_mode": "not measured (needs paid API calls; this benchmark runs fully offline)"
+}
