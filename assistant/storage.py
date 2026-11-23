@@ -144,6 +144,8 @@ class Storage:
         cur = self.db.cursor()
         for statement in SQLITE_SCHEMA if self.dialect == "sqlite" else MSSQL_SCHEMA:
             cur.execute(statement)
+        if self.dialect == "sqlite":
+            _migrate_sqlite(cur)
         self.db.commit()
 
     def close(self):
@@ -332,6 +334,33 @@ class Storage:
             "top_searches": searches,
             "policy_topics": topics,
         }
+
+
+def _migrate_sqlite(cur) -> None:
+    """Bring a database file made by an earlier version up to the current schema.
+
+    The first version logged every tool call with its full arguments in tool_calls.input
+    (NOT NULL), which also held shoppers' emails. The table is rebuilt with only the search
+    words and policy topic the dashboard shows, worked out from the old arguments the same
+    way log_tool does it; the rest of each old row is kept and the full arguments are dropped.
+    """
+    columns = {row[1] for row in cur.execute("PRAGMA table_info(tool_calls)").fetchall()}
+    if "input" not in columns:
+        return
+    cur.execute("ALTER TABLE tool_calls RENAME TO tool_calls_v1")
+    cur.execute(next(s for s in SQLITE_SCHEMA if "TABLE IF NOT EXISTS tool_calls" in s))
+    cur.execute(
+        """INSERT INTO tool_calls (id, conversation_id, created_at, name, query, topic, is_error)
+           SELECT id, conversation_id, created_at, name,
+                  CASE WHEN name = 'search_products' AND json_valid(input)
+                            AND json_type(input, '$.query') = 'text'
+                       THEN substr(lower(json_extract(input, '$.query')), 1, 200) END,
+                  CASE WHEN name = 'get_store_policy' AND json_valid(input)
+                            AND json_type(input, '$.topic') = 'text'
+                       THEN substr(json_extract(input, '$.topic'), 1, 32) END,
+                  is_error
+           FROM tool_calls_v1""")
+    cur.execute("DROP TABLE tool_calls_v1")
 
 
 def _connect_sqlite(path: str):
